@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
 
 // 1. Landing Page
 Route::get('/', function () {
@@ -21,11 +22,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // 4. Admin Routes (Add this section)
-// We use the 'auth:admin' middleware to ensure only logged-in admins can enter
-Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
 require __DIR__ . '/auth.php';
