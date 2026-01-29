@@ -26,4 +26,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
+Route::post('/admin/assign', [AdminController::class, 'assignVolunteer'])->name('admin.assign');
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+
+    // User Management CRUD
+    Route::get('/users', [AdminController::class, 'manageUsers'])->name('users.index');
+    Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
+    Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.destroy');
+    Route::post('/assign', [AdminController::class, 'assignVolunteer'])->name('assign');
+});
+
 require __DIR__ . '/auth.php';
