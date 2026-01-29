@@ -49,7 +49,7 @@
                             class="text-xs uppercase tracking-widest font-semibold text-gray-600" />
                         <x-text-input id="name"
                             class="block mt-1 w-full border-gray-200 focus:ring-green-600 focus:border-green-600"
-                            type="text" name="name" :value="old('name')" required autofocus placeholder="John Doe" />
+                            type="text" name="name" :value="old('name')" required autofocus placeholder="Enter Your Name" />
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
@@ -79,14 +79,14 @@
                                 class="text-xs uppercase tracking-widest font-semibold text-gray-600" />
                             <x-text-input id="password"
                                 class="block mt-1 w-full border-gray-200 focus:ring-green-600 focus:border-green-600"
-                                type="password" name="password" required />
+                                type="password" name="password" required placeholder="Enter Password" />
                         </div>
                         <div>
                             <x-input-label for="password_confirmation" :value="__('Confirm')"
                                 class="text-xs uppercase tracking-widest font-semibold text-gray-600" />
                             <x-text-input id="password_confirmation"
                                 class="block mt-1 w-full border-gray-200 focus:ring-green-600 focus:border-green-600"
-                                type="password" name="password_confirmation" required />
+                                type="password" name="password_confirmation" required placeholder="Re-Type Password" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('password')" class="mt-1" />
