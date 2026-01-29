@@ -21,7 +21,7 @@
                     @endif
 
                     <div>
-                        <h3 class="text-3xl font-bold italic">Welcome {{ Auth::user()->name }}!</h3>
+                        <h3 class="text-3xl font-bold italic">Welcome{{ Auth::user()->name }}!</h3>
                         <p class="mt-2 opacity-90 text-lg">
                             Status: <span class="capitalize font-semibold underline decoration-yellow-400">
                                 {{ Auth::user()->getRoleNames()->first() ?? 'Member' }}
