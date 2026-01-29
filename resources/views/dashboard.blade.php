@@ -65,9 +65,11 @@
                         </div>
                         <h4 class="text-lg font-bold text-gray-800">Donate Food</h4>
                         <p class="text-gray-500 text-sm mb-4">Help reduce waste today.</p>
-                        <a href="#"
-                            class="mt-auto px-6 py-2 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition">List
-                            Food Now</a>
+
+                        <a href="{{ route('donations.create') }}"
+                            class="mt-auto px-6 py-2 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition shadow-md shadow-orange-200">
+                            Donate Food Now
+                        </a>
                     </div>
                 @endhasanyrole
 
