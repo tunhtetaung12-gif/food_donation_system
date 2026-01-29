@@ -19,8 +19,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'avatar', // 3. Added avatar for profile images
-        // 'role' is removed because Spatie handles it via assignRole()
+        'avatar', 
     ];
 
     /**

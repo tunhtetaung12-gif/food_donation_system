@@ -8,19 +8,6 @@ use Spatie\Permission\Models\Permission;
 
 class RoleSeeder extends Seeder
 {
-    // public function run(): void
-    // {
-    //     // Create Roles
-    //     $admin = Role::create(['name' => 'admin']);
-    //     $donor = Role::create(['name' => 'donor']);
-    //     $volunteer = Role::create(['name' => 'volunteer']);
-
-    //     // Create a sample Permission
-    //     $permission = Permission::create(['name' => 'approve donations']);
-
-    //     // Give admin all permissions
-    //     $admin->givePermissionTo($permission);
-    // }
 
     public function run(): void
     {

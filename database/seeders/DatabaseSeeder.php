@@ -13,17 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Create Roles & Permissions first!
         $this->call([
             RoleSeeder::class,
         ]);
 
-        // 2. Then create your Admin/Users
         $this->call([
             AdminSeeder::class,
         ]);
 
-        // Optional: Create a generic test user
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
