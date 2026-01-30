@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles; // 1. Import Spatie Trait
+use Spatie\Permission\Traits\HasRoles; 
 
 class User extends Authenticatable
 {
@@ -44,5 +44,10 @@ class User extends Authenticatable
     public function donations()
     {
         return $this->hasMany(Donation::class);
+    }
+
+    public function assignedVolunteer()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

@@ -20,11 +20,6 @@
                     <span class="text-lg">👥</span>
                     <span>Manage Users</span>
                 </a>
-                <a href="#"
-                    class="flex items-center space-x-3 text-slate-300 hover:bg-slate-800 p-3 rounded-lg transition border-t border-slate-800 pt-4">
-                    <span class="text-lg">⚙️</span>
-                    <span>System Settings</span>
-                </a>
             </nav>
 
             <div class="p-4 border-t border-slate-800">
@@ -69,11 +64,6 @@
                         <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Volunteers</p>
                         <p class="text-3xl font-bold mt-1 text-blue-600">{{ $volunteerCount ?? 0 }}</p>
                     </div>
-                    {{-- <div
-                        class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-t-4 border-t-yellow-500">
-                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">System Health</p>
-                        <p class="text-3xl font-bold mt-1 text-yellow-600 text-sm">Optimal</p>
-                    </div> --}}
                 </div>
 
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
