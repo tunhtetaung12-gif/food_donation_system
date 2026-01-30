@@ -2,31 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Donation;
+use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Show the Admin Dashboard.
-     */
     public function index()
     {
-        // 1. Get all Donors for the Assignment Table
-        $donors = \App\Models\User::role('donor')->get();
+        $donors = User::role('donor')->get();
+        $volunteers = User::role('volunteer')->get();
+        $recentUsers = User::latest()->take(5)->get();
 
-        // 2. Get all Volunteers for the Dropdown menus
-        $volunteers = \App\Models\User::role('volunteer')->get();
+        $totalUsers = User::count();
+        $donorCount = $donors->count();
+        $volunteerCount = $volunteers->count();
 
-        // 3. Get the 5 most recent registrations (the variable that was missing!)
-        $recentUsers = \App\Models\User::latest()->take(5)->get();
-
-        // 4. Calculate Stats
-        $totalUsers = \App\Models\User::count();
-        $donorCount = \App\Models\User::role('donor')->count();
-        $volunteerCount = \App\Models\User::role('volunteer')->count();
-
-        // Pass everything to the view
         return view('admin.dashboard', compact(
             'donors',
             'volunteers',
@@ -37,24 +29,15 @@ class AdminController extends Controller
         ));
     }
 
-    public function assignVolunteer(Request $request)
-    {
-        $donor = \App\Models\User::findOrFail($request->donor_id);
-        $donor->update(['assigned_to' => $request->volunteer_id]);
-
-        return back()->with('status', 'Volunteer assigned successfully!');
-    }
-
-    // Add these to your AdminController
     public function manageUsers()
     {
-        $users = \App\Models\User::with('roles')->paginate(10);
+        $users = User::with('roles')->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
-    public function editUser(\App\Models\User $user)
+    public function editUser(User $user)
     {
-        $roles = \Spatie\Permission\Models\Role::all();
+        $roles = Role::all();
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
@@ -70,5 +53,23 @@ class AdminController extends Controller
         $user->syncRoles($request->role);
 
         return redirect()->route('admin.users.index')->with('status', 'User updated!');
+    }
+
+
+    public function assignVolunteer(Request $request)
+    {
+        $request->validate([
+            'donor_id' => 'required|exists:users,id',
+            'volunteer_id' => 'required|exists:users,id',
+        ]);
+
+        $donor = User::findOrFail($request->donor_id);
+        $volunteer = User::findOrFail($request->volunteer_id);
+
+        $donor->update([
+            'assigned_to' => $request->volunteer_id
+        ]);
+
+        return back()->with('status', "Task successfully assigned to volunteer: {$volunteer->name}");
     }
 }
