@@ -24,7 +24,7 @@ return new class extends Migration
 
             // Logistics
             $table->string('pickup_location');
-            $table->string('place')->after('pickup_location');
+            $table->string('place');
             $table->string('image_path')->nullable();
 
             // Status: pending, assigned, collected, delivered
