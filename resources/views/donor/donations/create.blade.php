@@ -48,11 +48,19 @@
                     </div>
 
                     <div>
-                        <x-input-label for="description" :value="__('Additional Notes (Optional)')"
+                        <x-input-label for="place" :value="__('Donation Location')"
+                            class="text-xs uppercase font-bold text-gray-600" />
+                        <x-text-input id="place" name="place" type="text"
+                            class="block mt-1 w-full border-gray-200 focus:ring-green-600"
+                            placeholder="Please enter the full address for the donation" />
+                    </div>
+
+                    <div>
+                        <x-input-label for="description" :value="__('Donation Description')"
                             class="text-xs uppercase font-bold tracking-widest text-gray-600" />
                         <textarea id="description" name="description" rows="3"
                             class="block mt-1 w-full border-gray-200 rounded-lg focus:ring-green-600 focus:border-green-600 shadow-sm"
-                            placeholder="Any allergy info or special instructions..."></textarea>
+                            placeholder="Kindly provide a brief explanation of the purpose for this donation."></textarea>
                     </div>
 
                     <div class="pt-4">

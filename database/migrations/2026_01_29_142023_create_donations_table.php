@@ -19,11 +19,12 @@ return new class extends Migration
             // Food Details
             $table->string('food_name');
             $table->text('description')->nullable();
-            $table->string('quantity'); // e.g., "5 kg" or "10 packets"
+            $table->string('quantity');
             $table->dateTime('expiry_date');
 
             // Logistics
             $table->string('pickup_location');
+            $table->string('place')->after('pickup_location');
             $table->string('image_path')->nullable();
 
             // Status: pending, assigned, collected, delivered

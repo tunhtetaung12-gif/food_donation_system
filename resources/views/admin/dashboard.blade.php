@@ -20,6 +20,11 @@
                     <span class="text-lg">👥</span>
                     <span>Manage Users</span>
                 </a>
+                <a href="{{ route('admin.donations.index') }}"
+                    class="flex items-center space-x-3 {{ request()->routeIs('admin.donations.index') ? 'bg-green-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800' }} p-3 rounded-lg transition">
+                    <span class="text-lg">📦</span>
+                    <span class="font-medium">Manage Donations</span>
+                </a>
             </nav>
 
             <div class="p-4 border-t border-slate-800">
@@ -63,74 +68,6 @@
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-t-4 border-t-blue-500">
                         <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Volunteers</p>
                         <p class="text-3xl font-bold mt-1 text-blue-600">{{ $volunteerCount ?? 0 }}</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div class="p-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
-                        <div>
-                            <h3 class="font-bold text-gray-800 font-serif text-lg">Donor & Volunteer Matching</h3>
-                            <p class="text-xs text-gray-500 italic">Assign registered volunteers to donors for
-                                logistics.</p>
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead class="bg-gray-50 text-gray-400 uppercase text-xs">
-                                <tr>
-                                    <th class="p-4 font-semibold">Donor Name</th>
-                                    <th class="p-4 font-semibold">Email</th>
-                                    <th class="p-4 font-semibold">Assign Volunteer</th>
-                                    <th class="p-4 font-semibold">Status</th>
-                                    <th class="p-4 font-semibold text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                @forelse($donors as $donor)
-                                    <tr class="hover:bg-gray-50/80 transition">
-                                        <td class="p-4 text-sm font-medium text-gray-900">{{ $donor->name }}</td>
-                                        <td class="p-4 text-sm text-gray-600">{{ $donor->email }}</td>
-                                        <td class="p-4 text-sm">
-                                            <form action="{{ route('admin.assign') }}" method="POST"
-                                                class="flex items-center space-x-2">
-                                                @csrf
-                                                <input type="hidden" name="donor_id" value="{{ $donor->id }}">
-                                                <select name="volunteer_id"
-                                                    class="text-xs border-gray-200 rounded-lg focus:ring-green-500 focus:border-green-500 py-1 bg-gray-50">
-                                                    <option value="">Select Volunteer...</option>
-                                                    @foreach ($volunteers as $volunteer)
-                                                        <option value="{{ $volunteer->id }}"
-                                                            {{ $donor->assigned_to == $volunteer->id ? 'selected' : '' }}>
-                                                            {{ $volunteer->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                        </td>
-                                        <td class="p-4">
-                                            @if ($donor->assigned_to)
-                                                <span
-                                                    class="px-2 py-1 text-[10px] font-black rounded bg-green-100 text-green-700 uppercase tracking-tighter">Assigned</span>
-                                            @else
-                                                <span
-                                                    class="px-2 py-1 text-[10px] font-black rounded bg-yellow-100 text-yellow-700 uppercase tracking-tighter">Pending</span>
-                                            @endif
-                                        </td>
-                                        <td class="p-4 text-right">
-                                            <button type="submit"
-                                                class="bg-slate-900 hover:bg-black text-white text-[10px] font-bold px-3 py-1.5 rounded shadow-sm transition uppercase">
-                                                Update
-                                            </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="p-4 text-center text-gray-500 text-sm">No donors
-                                            found.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
                     </div>
                 </div>
 
