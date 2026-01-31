@@ -51,4 +51,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/donations', [AdminController::class, 'manageDonations'])->name('donations.index');
     Route::post('/donations/assign', [AdminController::class, 'assignVolunteer'])->name('donations.assign');
 });
+
+
 require __DIR__ . '/auth.php';

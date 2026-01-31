@@ -20,21 +20,21 @@ class DonationController extends Controller
             'quantity' => 'required|string',
             'expiry_date' => 'required|date|after:now',
             'pickup_location' => 'required|string',
+            'place'           => 'required|string',
             'description' => 'nullable|string',
         ]);
 
-        // Capture the created donation in a variable
         $donation = Donation::create([
             'user_id' => Auth::id(),
             'food_name' => $request->food_name,
             'quantity' => $request->quantity,
             'expiry_date' => $request->expiry_date,
             'pickup_location' => $request->pickup_location,
+            'place' => $request->place,
             'description' => $request->description,
             'status' => 'pending',
         ]);
 
-        // Redirect to the success page instead of the dashboard
         return redirect()->route('donations.success', $donation->id);
     }
 
@@ -45,11 +45,27 @@ class DonationController extends Controller
     {
         $donation = Donation::findOrFail($id);
 
-        // Security check: Ensure the user can only see their own success page
         if ($donation->user_id !== Auth::id()) {
             abort(403);
         }
 
         return view('donor.donations.success', compact('donation'));
+    }
+
+    public function updateVoluntter(Request $request, $id)
+    {
+        $donation = Donation::where('id', $id)->first();
+
+        $donation->update([
+            'user_id' => $donation->user_id,
+            'food_name' => $donation->food_name,
+            'quantity' => $donation->quantity,
+            'expiry_date' => $donation->expiry_date,
+            'pickup_location' => $donation->pickup_location,
+            'place' => $donation->place,
+            'description' => $donation->description,
+            'status' => $donation->status,
+            'volunteer_id' => $request->volunteer_id,
+        ]);
     }
 }

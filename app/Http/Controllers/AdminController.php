@@ -55,6 +55,21 @@ class AdminController extends Controller
         return redirect()->route('admin.users.index')->with('status', 'User updated!');
     }
 
+    public function manageDonations()
+    {
+        $donors = User::whereHas('roles', function($q){
+            $q->where('name', 'donor');
+        })->get();
+
+        $donations = Donation::with('user', 'volunteer')->get();
+
+        $volunteers = User::whereHas('roles', function($q){
+            $q->where('name', 'volunteer');
+        })->get();
+
+        return view('admin.donations.index', compact('donations', 'volunteers', 'donors'));
+    }
+
 
     public function assignVolunteer(Request $request)
     {
