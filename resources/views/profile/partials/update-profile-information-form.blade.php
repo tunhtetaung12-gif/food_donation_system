@@ -1,16 +1,9 @@
 <section class="max-w-4xl">
     <header class="mb-8">
-        <h2 class="text-2xl font-serif font-bold text-gray-900 tracking-tight">
-            {{ __('Personal Identity') }}
-        </h2>
-        <p class="mt-2 text-sm text-gray-500 italic">
-            {{ __('Refine your public profile and digital contact details.') }}
+        <h2 class="text-2xl font-serif font-bold text-gray-900 tracking-tight">{{ __('Personal Identity') }}</h2>
+        <p class="mt-2 text-sm text-gray-500 italic">{{ __('Refine your public profile and digital contact details.') }}
         </p>
     </header>
-
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
 
     <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="space-y-8">
         @csrf
@@ -19,11 +12,13 @@
         <div class="flex flex-col items-center pb-8 border-b border-gray-100">
             <div class="relative group">
                 <div class="w-32 h-32 rounded-2xl overflow-hidden ring-4 ring-white shadow-xl relative bg-gray-100">
+
                     @if ($user->profile_photo)
-                        <img src="{{ asset('storage/' . $user->profile_photo) }}"
+                        <img id="photo-preview" src="{{ asset('storage/' . $user->profile_photo) }}"
                             class="w-full h-full object-cover transform transition group-hover:scale-110">
                     @else
-                        <div class="w-full h-full flex items-center justify-center text-gray-300">
+                        <div id="photo-placeholder"
+                            class="w-full h-full flex items-center justify-center text-gray-300">
                             <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -41,10 +36,12 @@
                         </svg>
                     </label>
                 </div>
-                <input id="profile_photo" name="profile_photo" type="file" class="hidden"
-                    onchange="this.form.submit()" />
+
+                <input id="profile_photo" name="profile_photo" type="file" class="hidden" accept="image/*"
+                    onchange="previewImage(this)" />
             </div>
-            <p class="mt-3 text-[10px] uppercase tracking-widest font-bold text-gray-400">Click photo to update</p>
+            <p class="mt-3 text-[10px] uppercase tracking-widest font-bold text-gray-400 text-center">Click photo to
+                upload<br><span class="text-gray-300 font-medium lowercase">(Max 5MB)</span></p>
             <x-input-error class="mt-2" :messages="$errors->get('profile_photo')" />
         </div>
 
@@ -54,8 +51,7 @@
                     class="text-xs uppercase tracking-widest font-bold text-gray-600" />
                 <x-text-input id="name" name="name" type="text"
                     class="block w-full border-0 border-b border-gray-200 focus:ring-0 focus:border-green-600 transition-colors bg-transparent px-0"
-                    :value="old('name', $user->name)" required autofocus autocomplete="name" />
-                <x-input-error :messages="$errors->get('name')" />
+                    :value="old('name', $user->name)" required />
             </div>
 
             <div class="space-y-2">
@@ -63,17 +59,7 @@
                     class="text-xs uppercase tracking-widest font-bold text-gray-600" />
                 <x-text-input id="email" name="email" type="email"
                     class="block w-full border-0 border-b border-gray-200 focus:ring-0 focus:border-green-600 transition-colors bg-transparent px-0"
-                    :value="old('email', $user->email)" required autocomplete="username" />
-                <x-input-error :messages="$errors->get('email')" />
-
-                @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
-                    <div class="mt-2">
-                        <button form="send-verification"
-                            class="text-xs text-red-500 hover:text-red-700 font-bold uppercase tracking-tighter">
-                            {{ __('Resend Verification') }}
-                        </button>
-                    </div>
-                @endif
+                    :value="old('email', $user->email)" required />
             </div>
 
             <div class="space-y-2">
@@ -81,8 +67,7 @@
                     class="text-xs uppercase tracking-widest font-bold text-gray-600" />
                 <x-text-input id="phone" name="phone" type="text"
                     class="block w-full border-0 border-b border-gray-200 focus:ring-0 focus:border-green-600 transition-colors bg-transparent px-0"
-                    :value="old('phone', $user->phone)" autocomplete="tel" />
-                <x-input-error :messages="$errors->get('phone')" />
+                    :value="old('phone', $user->phone)" />
             </div>
 
             <div class="space-y-2">
@@ -90,7 +75,6 @@
                     class="text-xs uppercase tracking-widest font-bold text-gray-600" />
                 <textarea id="address" name="address" rows="1"
                     class="block w-full border-0 border-b border-gray-200 focus:ring-0 focus:border-green-600 transition-colors bg-transparent px-0 resize-none">{{ old('address', $user->address) }}</textarea>
-                <x-input-error :messages="$errors->get('address')" />
             </div>
         </div>
 
@@ -99,13 +83,26 @@
                 class="bg-gray-900 text-white px-10 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-green-700 transition-all shadow-lg active:scale-95">
                 {{ __('Update Profile') }}
             </button>
-
-            @if (session('status') === 'profile-updated')
-                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="fixed bottom-10 right-10 bg-green-600 text-white px-6 py-3 rounded-xl shadow-2xl text-sm font-bold">
-                    {{ __('✓ Profile Refined') }}
-                </p>
-            @endif
         </div>
     </form>
 </section>
+
+<script>
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                let preview = document.getElementById('photo-preview');
+                let placeholder = document.getElementById('photo-placeholder');
+
+                if (preview) {
+                    preview.src = e.target.result;
+                } else if (placeholder) {
+                    placeholder.outerHTML =
+                        `<img id="photo-preview" src="${e.target.result}" class="w-full h-full object-cover transform transition group-hover:scale-110">`;
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

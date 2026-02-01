@@ -6,6 +6,9 @@ use App\Models\Donation;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class AdminController extends Controller
 {
@@ -39,6 +42,26 @@ class AdminController extends Controller
     {
         $roles = Role::all();
         return view('admin.users.edit', compact('user', 'roles'));
+    }
+
+    public function show(User $user)
+    {
+        return view('admin.users.show', compact('user'));
+    }
+
+    public function destroy(User $user)
+    {
+        if (Auth::id() === $user->id) {
+            return back()->with('status', 'You cannot delete your own account.');
+        }
+
+        if ($user->profile_photo) {
+            Storage::disk('public')->delete($user->profile_photo);
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users.index')->with('status', 'Member successfully removed.');
     }
 
     public function updateUser(Request $request, User $user)
