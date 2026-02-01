@@ -52,20 +52,5 @@ class DonationController extends Controller
         return view('donor.donations.success', compact('donation'));
     }
 
-    public function updateVoluntter(Request $request, $id)
-    {
-        $donation = Donation::where('id', $id)->first();
-
-        $donation->update([
-            'user_id' => $donation->user_id,
-            'food_name' => $donation->food_name,
-            'quantity' => $donation->quantity,
-            'expiry_date' => $donation->expiry_date,
-            'pickup_location' => $donation->pickup_location,
-            'place' => $donation->place,
-            'description' => $donation->description,
-            'status' => $donation->status,
-            'volunteer_id' => $request->volunteer_id,
-        ]);
-    }
+    
 }

@@ -57,13 +57,13 @@ class AdminController extends Controller
 
     public function manageDonations()
     {
-        $donors = User::whereHas('roles', function($q){
+        $donors = User::whereHas('roles', function ($q) {
             $q->where('name', 'donor');
         })->get();
 
         $donations = Donation::with('user', 'volunteer')->get();
 
-        $volunteers = User::whereHas('roles', function($q){
+        $volunteers = User::whereHas('roles', function ($q) {
             $q->where('name', 'volunteer');
         })->get();
 
@@ -71,20 +71,20 @@ class AdminController extends Controller
     }
 
 
-    public function assignVolunteer(Request $request)
+    public function assignVolunteer(Request $request, $id)
     {
+
         $request->validate([
-            'donor_id' => 'required|exists:users,id',
             'volunteer_id' => 'required|exists:users,id',
         ]);
 
-        $donor = User::findOrFail($request->donor_id);
-        $volunteer = User::findOrFail($request->volunteer_id);
+        $donation = \App\Models\Donation::findOrFail($id);
 
-        $donor->update([
-            'assigned_to' => $request->volunteer_id
+        $donation->update([
+            'volunteer_id' => $request->volunteer_id,
+            'status' => 'assigned'
         ]);
 
-        return back()->with('status', "Task successfully assigned to volunteer: {$volunteer->name}");
+        return back()->with('success', 'Volunteer successfully assigned to ' . $donation->food_name);
     }
 }
