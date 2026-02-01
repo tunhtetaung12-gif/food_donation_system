@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-        public function store(Request $request)
+    public function store(Request $request)
     {
         // 1. Validate all inputs
         $request->validate([
@@ -52,6 +52,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
             'phone' => $request->phone,
             'address' => $request->address,
             'profile_photo' => $path, // This variable is now defined!

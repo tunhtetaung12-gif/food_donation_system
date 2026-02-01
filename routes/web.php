@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProfileController;
 
@@ -10,10 +11,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -46,11 +46,16 @@ Route::get('/donate/success/{id}', [DonationController::class, 'success'])->name
 Route::post('/admin/assign', [AdminController::class, 'assignVolunteer'])->name('admin.assign');
 
 
+
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/donations', [AdminController::class, 'manageDonations'])->name('donations.index');
-    Route::post('/donations/assign', [AdminController::class, 'assignVolunteer'])->name('donations.assign');
+    Route::post('/donations/assign/{id}', [AdminController::class, 'assignVolunteer'])
+        ->name('donations.assign');
 });
 
+Route::post('/dashboard/complete/{id}', [DashboardController::class, 'complete'])
+    ->name('volunteer.donations.complete')
+    ->middleware('auth');
 
 require __DIR__ . '/auth.php';
