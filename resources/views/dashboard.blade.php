@@ -47,105 +47,6 @@
                 </div>
             @endrole
 
-            {{-- @role('volunteer')
-                <div class="mb-10 bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
-                    <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
-                        <div class="flex items-center space-x-3">
-                            <div class="bg-slate-100 p-2 rounded-lg">
-                                <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-base font-bold text-gray-900 tracking-tight">Assigned Logistics Overview
-                                </h3>
-                                <p class="text-xs text-gray-500">Authorized pickup list and donor coordination</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="flex h-2 w-2">
-                                <span
-                                    class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                            </span>
-                            <span class="text-[11px] font-semibold text-gray-600 uppercase tracking-widest">Live
-                                Schedule</span>
-                        </div>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gray-50/50 border-b border-gray-100">
-                                    <th class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
-                                        Donor Entity</th>
-                                    <th class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
-                                        Logistics Hub / Location</th>
-                                    <th
-                                        class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest text-right">
-                                        Coordination</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                @forelse($assignedDonors ?? [] as $donor)
-                                    <tr class="hover:bg-gray-50/80 transition-colors">
-                                        <td class="px-6 py-4">
-                                            <div class="flex flex-col">
-                                                <span class="text-sm font-semibold text-gray-900">{{ $donor->name }}</span>
-                                                <span class="text-xs text-gray-400 font-mono">{{ $donor->email }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center text-sm text-gray-600">
-                                                <svg class="w-4 h-4 mr-2 text-gray-300" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                                    </path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                </svg>
-                                                <span class="text-gray-500">Pending verified address details</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-right">
-                                            <a href="mailto:{{ $donor->email }}"
-                                                class="inline-flex items-center px-4 py-2 border border-gray-200 bg-white text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-50 hover:border-gray-300 transition-all uppercase tracking-tighter">
-                                                <svg class="w-3.5 h-3.5 mr-2" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                                                    </path>
-                                                </svg>
-                                                Initialize Contact
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="3" class="px-6 py-12 text-center">
-                                            <div class="inline-flex flex-col items-center">
-                                                <svg class="w-10 h-10 text-gray-200 mb-3" fill="none"
-                                                    stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
-                                                    </path>
-                                                </svg>
-                                                <p class="text-sm font-medium text-gray-400 italic">Deployment pending: No
-                                                    assignments found for current ID.</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            @endrole --}}
-
             @role('volunteer')
                 <div class="mb-10 bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
                     <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
@@ -163,6 +64,8 @@
                             </div>
                         </div>
                     </div>
+
+                    
 
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
