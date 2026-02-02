@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-// REMOVED: use RoleSeeder; (Not needed when in the same namespace)
 
 class DatabaseSeeder extends Seeder
 {

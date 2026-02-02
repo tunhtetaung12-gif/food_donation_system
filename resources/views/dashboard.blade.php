@@ -1,4 +1,31 @@
 <x-app-layout>
+    @if (session('success'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform translate-y-[-20px]"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0" class="fixed top-6 right-6 z-[100] max-w-sm w-full">
+
+            <div
+                class="bg-white/90 backdrop-blur-md border border-green-100 shadow-2xl rounded-2xl p-4 flex items-center space-x-4">
+                <div class="bg-green-500 p-2 rounded-full flex-shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-bold text-gray-800">{{ session('success') }}</p>
+                </div>
+                <button @click="show = false" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    @endif
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('User Dashboard') }}
@@ -10,8 +37,8 @@
 
             <div class="relative overflow-hidden bg-green-600 rounded-3xl shadow-lg p-8 mb-8 text-white">
                 <div class="relative z-10 flex items-center space-x-6">
-                    @if (Auth::user()->avatar)
-                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}"
+                    @if (Auth::user()->profile_photo)
+                        <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}"
                             class="h-20 w-20 rounded-full border-4 border-green-400 shadow-sm">
                     @else
                         <div
@@ -65,7 +92,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -113,17 +140,29 @@
                                         </td>
                                         <td class="px-6 py-4 text-right">
                                             <div class="flex flex-col items-end space-y-2">
-                                                <a href="mailto:{{ $donation->user->email ?? '#' }}"
+                                                <button type="button"
+                                                    onclick="openDonorModal({{ json_encode($donation->user) }})"
                                                     class="inline-flex items-center px-4 py-2 border border-blue-200 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-lg hover:bg-blue-100 transition-all uppercase w-max">
+                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    </svg>
                                                     Contact Donor
-                                                </a>
+                                                </button>
 
                                                 <form action="{{ route('volunteer.donations.complete', $donation->id) }}"
-                                                    method="POST">
+                                                    method="POST" id="complete-form-{{ $donation->id }}">
                                                     @csrf
-                                                    <button type="submit"
-                                                        onclick="return confirm('Are you sure you have collected this item?')"
-                                                        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all shadow-sm">
+                                                    <button type="button"
+                                                        onclick="confirmPickup('{{ $donation->id }}', '{{ $donation->food_name }}')"
+                                                        class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all shadow-sm active:scale-95">
+                                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M5 13l4 4L19 7" />
+                                                        </svg>
                                                         Mark Picked Up
                                                     </button>
                                                 </form>
@@ -176,7 +215,8 @@
                     </div>
                     <h4 class="text-lg font-bold text-gray-800">Settings</h4>
                     <p class="text-gray-500 text-sm mb-4">Update your profile and avatar.</p>
-                    <a href="{{ route('profile.edit') }}" class="mt-auto text-blue-600 font-bold hover:underline">Edit
+                    <a href="{{ route('profile.edit') }}"
+                        class="mt-auto text-blue-600 font-bold hover:underline">Edit
                         Profile →</a>
                 </div>
             </div>
@@ -214,3 +254,139 @@
         </div>
     </div>
 </x-app-layout>
+
+
+<div id="donorModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onclick="closeDonorModal()"></div>
+
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div
+            class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-100">
+            <div class="h-24 bg-gradient-to-r from-blue-600 to-indigo-700">
+                <button onclick="closeDonorModal()"
+                    class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="px-6 pb-8">
+                <div class="relative -mt-12 mb-4 flex justify-center">
+                    <img id="modal-photo" src=""
+                        class="w-24 h-24 rounded-2xl object-cover border-4 border-white shadow-xl bg-white">
+                </div>
+
+                <div class="text-center mb-8">
+                    <h3 id="modal-name" class="text-2xl font-black text-gray-900 tracking-tight">Donor Name</h3>
+                    <p class="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em]">Verified FoodShare Donor
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <div
+                        class="group flex items-center p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-blue-100 hover:bg-blue-50/30 transition-all">
+                        <div class="bg-white p-2.5 rounded-xl shadow-sm mr-4 text-blue-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                    stroke-width="2" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-[9px] uppercase font-black text-gray-400 tracking-widest">Email Address</p>
+                            <a id="modal-email" href=""
+                                class="text-sm font-bold text-gray-700 hover:text-blue-600 transition-colors"></a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="group flex items-center p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-green-100 hover:bg-green-50/30 transition-all">
+                        <div class="bg-white p-2.5 rounded-xl shadow-sm mr-4 text-green-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                    stroke-width="2" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-[9px] uppercase font-black text-gray-400 tracking-widest">Phone Number</p>
+                            <p id="modal-phone" class="text-sm font-bold text-gray-700"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-2 gap-3">
+                    <a id="modal-call-btn" href=""
+                        class="flex items-center justify-center bg-gray-900 text-white py-3.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-black transition-all active:scale-95">
+                        Call Now
+                    </a>
+                    <a id="modal-email-btn" href=""
+                        class="flex items-center justify-center bg-blue-600 text-white py-3.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all active:scale-95">
+                        Send Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openDonorModal(user) {
+
+        document.getElementById('modal-name').innerText = user.name;
+        document.getElementById('modal-email').innerText = user.email;
+        document.getElementById('modal-email').href = "mailto:" + user.email;
+        document.getElementById('modal-phone').innerText = user.phone ? user.phone : 'Not Provided';
+
+        document.getElementById('modal-email-btn').href = "mailto:" + user.email;
+        document.getElementById('modal-call-btn').href = user.phone ? "tel:" + user.phone : "#";
+        if (!user.phone) {
+            document.getElementById('modal-call-btn').classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+            document.getElementById('modal-call-btn').classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+
+        const photoPath = user.profile_photo ?
+            "/storage/" + user.profile_photo :
+            "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name) +
+            "&background=2563eb&color=fff&size=128";
+        document.getElementById('modal-photo').src = photoPath;
+
+        const modal = document.getElementById('donorModal');
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDonorModal() {
+        const modal = document.getElementById('donorModal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    function confirmPickup(id, foodName) {
+        Swal.fire({
+            title: 'Confirm Collection',
+            text: `Did you pick up the ${foodName}?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#16a34a',
+            cancelButtonColor: '#94a3b8',
+            confirmButtonText: 'Yes, Collected!',
+            cancelButtonText: 'Not yet',
+            customClass: {
+                popup: 'rounded-3xl',
+                confirmButton: 'rounded-xl px-6 py-3',
+                cancelButton: 'rounded-xl px-6 py-3'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('complete-form-' + id).submit();
+            }
+        });
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
