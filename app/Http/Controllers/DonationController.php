@@ -8,10 +8,31 @@ use Illuminate\Support\Facades\Auth;
 
 class DonationController extends Controller
 {
-    
+
+    public function index()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $donations = $user->donations()
+            ->with('volunteer')
+            ->latest()
+            ->paginate(5);
+
+        return view('donor.donations.index', compact('donations'));
+    }
     public function create()
     {
         return view('donor.donations.create');
+    }
+
+    public function edit(Donation $donation)
+    {
+        if ($donation->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('donor.donations.edit', compact('donation'));
     }
 
     public function store(Request $request)
@@ -39,9 +60,26 @@ class DonationController extends Controller
         return redirect()->route('donations.success', $donation->id);
     }
 
-    /**
-     * Display the success page after a donation is posted.
-     */
+    public function update(Request $request, Donation $donation)
+    {
+        if ($donation->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'food_name' => 'required|string|max:255',
+            'quantity' => 'required|string',
+            'expiry_date' => 'required|date',
+            'pickup_location' => 'required|string',
+            'place'           => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $donation->update($validated);
+
+        return redirect()->route('donations.index')->with('success', 'Donation updated successfully!');
+    }
+
     public function success($id)
     {
         $donation = Donation::findOrFail($id);
@@ -52,6 +90,4 @@ class DonationController extends Controller
 
         return view('donor.donations.success', compact('donation'));
     }
-
-
 }

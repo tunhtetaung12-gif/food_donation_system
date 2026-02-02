@@ -25,20 +25,6 @@ class DashboardController extends Controller
         return view('dashboard', compact('assignedDonations', 'myDonations'));
     }
 
-    // public function complete($id)
-    // {
-    //     $donation = Donation::findOrFail($id);
-    //     $currentUserId = Auth::id();
-
-    //     if ($donation->volunteer_id == $currentUserId) {
-    //         $donation->update([
-    //             'status' => 'completed'
-    //         ]);
-    //         return back()->with('success', 'Pickup completed successfully!');
-    //     }
-
-    //     return back()->with('error', 'Unauthorized action.');
-    // }
 
     public function complete($id)
     {

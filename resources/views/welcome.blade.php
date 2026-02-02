@@ -76,7 +76,7 @@
     </section>
 
     <footer class="bg-gray-900 text-gray-400 py-12 px-6 text-center">
-        <p class="mb-4">© 2026 FoodShare System. Developed for Computer Science Project.</p>
+        <p class="mb-4">© 2026 FoodShare System.</p>
         <div class="flex justify-center gap-6">
             <a href="#" class="hover:text-white transition">Privacy Policy</a>
             <a href="#" class="hover:text-white transition">Contact Us</a>
