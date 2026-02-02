@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Donation;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,7 +46,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/assign', [AdminController::class, 'assignVolunteer'])->name('assign');
 });
 
+
 Route::middleware(['auth', 'role:donor'])->group(function () {
+
+    Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
+
+    Route::get('/donations/{donation}/edit', [DonationController::class, 'edit'])->name('donations.edit');
+
+    Route::put('/donations/{donation}', [DonationController::class, 'update'])->name('donations.update');
+
     Route::get('/donate', [DonationController::class, 'create'])->name('donations.create');
 
     Route::post('/donate', [DonationController::class, 'store'])->name('donations.store');
@@ -60,6 +69,7 @@ Route::post('/admin/assign', [AdminController::class, 'assignVolunteer'])->name(
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/donations', [AdminController::class, 'manageDonations'])->name('donations.index');
+    
     Route::post('/donations/assign/{id}', [AdminController::class, 'assignVolunteer'])
         ->name('donations.assign');
 });

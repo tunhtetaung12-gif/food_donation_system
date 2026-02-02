@@ -185,14 +185,19 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
 
-                @hasanyrole('donor|admin')
+                @hasanyrole('donor')
                     <div
                         class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-green-500 hover:shadow-md transition flex flex-col items-center text-center">
                         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl mb-4">🍎
                         </div>
                         <h4 class="text-lg font-bold text-gray-800">My Donations</h4>
-                        <p class="text-gray-500 text-sm mb-4">You have shared 0 items so far.</p>
-                        <a href="#" class="mt-auto text-green-600 font-bold hover:underline">View History →</a>
+                        <p class="text-gray-500 text-sm mb-4">
+                            You have shared **{{ Auth::user()->donations->count() }}** items so far.
+                        </p>
+                        <a href="{{ route('donations.index') }}"
+                            class="mt-auto text-green-600 font-bold hover:underline">
+                            View History & Edit →
+                        </a>
                     </div>
 
                     <div

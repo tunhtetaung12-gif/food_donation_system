@@ -17,7 +17,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      */
-        protected $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'password',
@@ -47,6 +47,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Donation::class);
     }
+
 
     public function assignedVolunteer()
     {

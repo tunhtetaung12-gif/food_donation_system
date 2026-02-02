@@ -22,9 +22,10 @@
                     <thead class="bg-gray-50 text-gray-400 uppercase text-[10px] tracking-widest">
                         <tr>
                             <th class="p-4 font-bold">Food Item & Donor</th>
+                            <th class="p-4 font-bold">Donation Description</th>
                             <th class="p-4 font-bold">Pickup Location</th>
                             <th class="p-4 font-bold">Donation Location</th>
-                            <th class="p-4 font-bold">Expiry</th>
+                            <th class="p-4 font-bold">Donation Date</th>
                             <th class="p-4 font-bold">Assign Volunteer</th>
                             <th class="p-4 font-bold">Status</th>
                             <th class="p-4 font-bold text-right">Action</th>
@@ -37,6 +38,16 @@
                                     <div class="text-sm font-bold text-gray-900">{{ $donation->food_name }}</div>
                                     <div class="text-xs text-gray-500">From:
                                         {{ $donation->user->name ?? 'Guest Donor' }}</div>
+                                </td>
+                                <td class="p-4">
+                                    <div class="text-xs text-gray-600 italic leading-snug max-w-[180px]"
+                                        title="{{ $donation->description }}">
+                                        @if ($donation->description)
+                                            "{{ Str::limit($donation->description, 45) }}"
+                                        @else
+                                            <span class="text-gray-300">No description provided</span>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td class="p-4 text-xs text-gray-600 leading-relaxed">
                                     {{ $donation->pickup_location }}
