@@ -101,13 +101,14 @@ class AdminController extends Controller
             'volunteer_id' => 'required|exists:users,id',
         ]);
 
-        $donation = \App\Models\Donation::findOrFail($id);
+        $donation = Donation::findOrFail($id);
+        $volunteer = User::findOrFail($request->volunteer_id);
 
         $donation->update([
             'volunteer_id' => $request->volunteer_id,
             'status' => 'assigned'
         ]);
 
-        return back()->with('success', 'Volunteer successfully assigned to ' . $donation->food_name);
+        return back()->with('success', "Volunteer {$volunteer->name} has been successfully assigned to collect {$donation->food_name}.");
     }
 }

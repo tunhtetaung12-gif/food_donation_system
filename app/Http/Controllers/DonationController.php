@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DonationController extends Controller
 {
+    
     public function create()
     {
         return view('donor.donations.create');
@@ -52,5 +53,5 @@ class DonationController extends Controller
         return view('donor.donations.success', compact('donation'));
     }
 
-    
+
 }
