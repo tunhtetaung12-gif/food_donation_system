@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Donation;
+use App\Models\SupportRequest;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,11 +17,15 @@ class AdminController extends Controller
     {
         $donors = User::role('donor')->get();
         $volunteers = User::role('volunteer')->get();
-        $recentUsers = User::latest()->take(5)->get();
+        $members = User::role('member')->get();
 
+        $recentUsers = User::latest()->take(5)->get();
         $totalUsers = User::count();
+        $pendingRequestsCount = SupportRequest::where('status', 'pending')->count();
+        $recentRequests = SupportRequest::with('user')->latest()->take(5)->get();
         $donorCount = $donors->count();
         $volunteerCount = $volunteers->count();
+        $memberCount = $members->count();
 
         return view('admin.dashboard', compact(
             'donors',
@@ -28,7 +33,11 @@ class AdminController extends Controller
             'recentUsers',
             'totalUsers',
             'donorCount',
-            'volunteerCount'
+            'memberCount',
+            'volunteerCount',
+            'pendingRequestsCount',
+            'recentRequests'
+
         ));
     }
 
@@ -110,5 +119,26 @@ class AdminController extends Controller
         ]);
 
         return back()->with('success', "Volunteer {$volunteer->name} has been successfully assigned to collect {$donation->food_name}.");
+    }
+
+    public function manageSupportRequests()
+    {
+
+        $requests = SupportRequest::with('user')
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.support_requests.index', compact('requests'));
+    }
+
+    public function updateRequestStatus(Request $request, $id)
+    {
+        $supportRequest = SupportRequest::findOrFail($id);
+
+        $supportRequest->update([
+            'status' => $request->status
+        ]);
+
+        return back()->with('success', 'Request status updated successfully!');
     }
 }

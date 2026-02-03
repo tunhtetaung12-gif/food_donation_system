@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\SupportRequest;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 
 class User extends Authenticatable
@@ -46,6 +49,12 @@ class User extends Authenticatable
     public function donations()
     {
         return $this->hasMany(Donation::class);
+    }
+
+
+    public function supportRequests(): HasMany
+    {
+        return $this->hasMany(SupportRequest::class);
     }
 
 

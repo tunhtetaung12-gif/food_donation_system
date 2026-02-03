@@ -11,24 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('donations', function (Blueprint $table) {
+        Schema::create('support_requests', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-
-            $table->string('food_name');
-            $table->text('description')->nullable();
-            $table->string('quantity');
-            $table->dateTime('expiry_date');
-
-            $table->string('pickup_location');
-            $table->string('place');
-            $table->string('image_path')->nullable();
-
+            $table->text('reason');
+            $table->text('items_needed');
+            $table->string('address');
+            $table->enum('urgency', ['low', 'medium', 'high'])->default('medium');
             $table->string('status')->default('pending');
-
-            $table->foreignId('volunteer_id')->nullable()->constrained('users')->onDelete('set null');
-
             $table->timestamps();
         });
     }
@@ -38,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('donations');
+        Schema::dropIfExists('support_requests');
     }
 };

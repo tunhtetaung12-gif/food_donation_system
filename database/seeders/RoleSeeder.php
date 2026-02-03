@@ -14,6 +14,7 @@ class RoleSeeder extends Seeder
         $admin = Role::firstOrCreate(['name' => 'admin']);
         $donor = Role::firstOrCreate(['name' => 'donor']);
         $volunteer = Role::firstOrCreate(['name' => 'volunteer']);
+        $member = Role::firstOrCreate(['name' => 'member']);
 
         $permission = Permission::firstOrCreate(['name' => 'approve donations']);
         $admin->givePermissionTo($permission);

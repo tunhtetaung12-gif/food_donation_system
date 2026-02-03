@@ -1,11 +1,12 @@
 <?php
 
+use App\Models\Donation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Donation;
+use App\Http\Controllers\DonationController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SupportRequestController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -69,13 +70,23 @@ Route::post('/admin/assign', [AdminController::class, 'assignVolunteer'])->name(
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/donations', [AdminController::class, 'manageDonations'])->name('donations.index');
-    
+
     Route::post('/donations/assign/{id}', [AdminController::class, 'assignVolunteer'])
         ->name('donations.assign');
+
+    Route::get('/support-requests', [AdminController::class, 'manageSupportRequests'])->name('support.index');
+    Route::patch('/support-requests/{id}', [AdminController::class, 'updateRequestStatus'])->name('support.update');
 });
 
 Route::post('/dashboard/complete/{id}', [DashboardController::class, 'complete'])
     ->name('volunteer.donations.complete')
     ->middleware('auth');
+
+Route::middleware(['auth', 'role:member'])->prefix('member')->name('member.')->group(function () {
+    Route::get('/requests/create', [SupportRequestController::class, 'create'])->name('requests.create');
+    Route::post('/requests', [SupportRequestController::class, 'store'])->name('requests.store');
+    Route::get('/requests/history', [SupportRequestController::class, 'index'])->name('requests.history');
+});
+
 
 require __DIR__ . '/auth.php';

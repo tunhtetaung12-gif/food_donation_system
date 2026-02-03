@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Donation;
+use App\Models\SupportRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +23,12 @@ class DashboardController extends Controller
             ->latest()
             ->get();
 
-        return view('dashboard', compact('assignedDonations', 'myDonations'));
+        $availableRequests = SupportRequest::where('status', 'approved')
+            ->with('user')
+            ->latest()
+            ->get();
+
+        return view('dashboard', compact('assignedDonations', 'myDonations', 'availableRequests'));
     }
 
 

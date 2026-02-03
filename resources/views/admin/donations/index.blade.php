@@ -28,7 +28,6 @@
                             <th class="p-4 font-bold">Donation Date</th>
                             <th class="p-4 font-bold">Assign Volunteer</th>
                             <th class="p-4 font-bold">Status</th>
-                            <th class="p-4 font-bold text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -61,7 +60,7 @@
                                     {{ $donation->expiry_date->format('M d, h:i A') }}
                                 </td>
 
-                                <td class="p-4">
+                                {{-- <td class="p-4">
                                     <form action="{{ route('admin.donations.assign', $donation->id) }}" method="POST"
                                         class="flex items-center space-x-2">
                                         @csrf
@@ -75,20 +74,46 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                </td> --}}
+                                <td class="p-4 text-right">
+                                    <form action="{{ route('admin.donations.assign', $donation->id) }}" method="POST"
+                                        class="flex items-center justify-end space-x-2">
+                                        @csrf
+                                        {{-- @method('POST') --}}
+                                        <select name="volunteer_id" onchange="this.form.submit()"
+                                            class="text-xs border-gray-200 rounded-lg focus:ring-slate-900 focus:border-slate-900 py-1 bg-gray-50 transition-all hover:border-gray-400">
+                                            <option value="">Select Volunteer...</option>
+                                            @foreach ($volunteers as $volunteer)
+                                                <option value="{{ $volunteer->id }}"
+                                                    {{ $volunteer->id == $donation->volunteer_id ? 'selected' : '' }}>
+                                                    {{ $volunteer->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </form>
                                 </td>
-                                <td class="p-4">
+                                <td class="p-4 text-sm">
+                                    <div class="flex items-center">
+                                        <span
+                                            class="font-bold {{ $donation->volunteer_id ? 'text-green-600' : 'text-orange-500' }}">
+                                            <span class="mr-1">●</span>
+                                            {{ $donation->volunteer_id ? 'Assigned' : 'Pending' }}
+                                        </span>
+                                    </div>
+                                </td>
+                                {{-- <td class="p-4">
                                     <span
                                         class="px-2 py-1 text-[9px] font-black rounded uppercase tracking-tighter {{ $donation->volunteer_id ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700' }}">
                                         {{ $donation->volunteer_id ? 'Assigned' : 'Pending' }}
                                     </span>
-                                </td>
-                                <td class="p-4 text-right">
+                                </td> --}}
+                                {{-- <td class="p-4 text-right">
                                     <button type="submit"
                                         class="bg-slate-900 hover:bg-black text-white text-[10px] font-bold px-4 py-2 rounded transition shadow-sm uppercase">
                                         Assign
                                     </button>
                                     </form>
-                                </td>
+                                </td> --}}
                             </tr>
                         @empty
                             <tr>
