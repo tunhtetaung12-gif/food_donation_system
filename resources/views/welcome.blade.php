@@ -26,6 +26,7 @@
         </div>
     </nav>
 
+
     <header class="relative py-24 px-6 text-center overflow-hidden">
         <div class="relative z-10">
             <h2 class="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
@@ -147,8 +148,55 @@
 
         observer.observe(document.querySelector('#stats-section'));
     </script>
+    <section class="bg-white py-24 px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 
-    <section id="gallery" class="py-20 bg-white">
+                <div class="lg:col-span-5 space-y-8">
+                    <div class="space-y-4">
+                        <p class="text-green-600 font-bold uppercase tracking-[0.3em] text-xs">Since 2014</p>
+                        <h2 class="text-5xl font-serif text-gray-900 leading-tight">
+                            A Legacy of <br>
+                            <span class="italic">Shared Abundance.</span>
+                        </h2>
+                    </div>
+
+                    <div class="relative group">
+                        <div
+                            class="absolute -inset-4 border border-gray-100 rounded-sm -z-10 transition-transform group-hover:scale-105">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop"
+                            alt="Community gathering"
+                            class="w-full grayscale hover:grayscale-0 transition-all duration-700 rounded-sm shadow-2xl">
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 lg:pl-12 pt-12 lg:pt-32">
+                    <div class="max-w-xl space-y-8">
+                        <p class="text-2xl font-serif text-gray-700 leading-relaxed italic">
+                            "We believe that the surplus of the few should meet the basic necessities of the many."
+                        </p>
+
+                        <div class="space-y-6 text-gray-600 font-light leading-loose tracking-wide">
+                            <p>
+                                FoodShare was established on a singular, unwavering principle: hunger is not a scarcity
+                                of resources, but a failure of distribution. What began as a local initiative has
+                                evolved into a sophisticated network connecting surplus to necessity.
+                            </p>
+                            <p>
+                                Through our proprietary logistics framework and a dedicated fellowship of volunteers, we
+                                ensure that excess food from corporate partners and private donors is rerouted to those
+                                in immediate need with dignity and efficiency.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {{-- <section id="gallery" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
                 <h3 class="text-3xl font-bold text-gray-900">Our Community in Action</h3>
@@ -181,6 +229,73 @@
                     <div
                         class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
                         <p class="text-white font-semibold">Our Dedicated Volunteers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+
+    <section id="gallery" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-16">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div class="max-w-xl">
+                    <p class="text-green-600 font-bold uppercase tracking-[0.3em] text-[10px] mb-4">The Archive</p>
+                    <h3 class="text-5xl font-serif text-gray-900 leading-tight">
+                        Our Community <br>
+                        <span class="italic text-gray-400">In Action</span>
+                    </h3>
+                </div>
+                <div class="hidden md:block w-32 h-px bg-gray-200 mb-4"></div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-8">
+
+                <div
+                    class="col-span-12 md:col-span-7 group relative overflow-hidden rounded-sm aspect-[4/3] bg-gray-100">
+                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1200"
+                        alt="Feeding kids"
+                        class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105">
+
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                        <span class="text-green-400 text-[10px] font-bold uppercase tracking-widest mb-2">Social
+                            Impact</span>
+                        <p class="text-white font-serif text-2xl italic">Local Shelter Support</p>
+                    </div>
+                </div>
+
+                <div class="col-span-12 md:col-span-5 flex flex-col gap-8">
+                    <div class="group relative overflow-hidden rounded-sm aspect-square bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=800"
+                            alt="Food Prep"
+                            class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105">
+
+                        <div
+                            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <p class="text-white font-serif italic text-lg border-b border-white/40 pb-1">Surplus
+                                Packaging</p>
+                        </div>
+                    </div>
+
+                    <div class="p-8 border-l-2 border-green-600 bg-gray-50">
+                        <p class="text-sm text-gray-500 leading-relaxed font-light italic">
+                            "Documenting the tangible difference made through the collective effort of our donors and
+                            volunteers."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-span-12 group relative overflow-hidden rounded-sm aspect-[21/9] bg-gray-100">
+                    <img src="https://images.unsplash.com/photo-1594708767771-a7502209ff51?auto=format&fit=crop&q=80&w=1600"
+                        alt="Volunteer"
+                        class="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105">
+
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center p-12">
+                        <div class="max-w-xs">
+                            <p class="text-white font-serif text-3xl leading-tight">Our Dedicated <br>Fellowship</p>
+                            <div class="w-12 h-px bg-green-500 mt-4"></div>
+                        </div>
                     </div>
                 </div>
             </div>
