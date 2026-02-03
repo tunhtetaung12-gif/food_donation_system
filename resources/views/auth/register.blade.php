@@ -3,25 +3,22 @@
         <div class="hidden lg:flex lg:w-1/2 bg-green-600 relative overflow-hidden">
             <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
                 class="absolute inset-0 w-full h-full object-cover opacity-40" alt="Food Sharing">
-
-            <div class="relative z-10 flex flex-col justify-center px-16 text-white">
-                <x-application-logo class="w-20 h-20 fill-current text-white mb-8" />
-                <h1 class="text-5xl font-serif font-bold leading-tight">
-                    Making sure <br>no plate goes empty.
-                </h1>
-                <p class="mt-6 text-lg text-green-50 font-medium max-w-md">
-                    Join thousands of donors and volunteers in the FoodShare community to reduce waste and fight hunger.
-                </p>
-                <div class="mt-12 flex space-x-6">
-                    <div class="flex flex-col">
-                        <span class="text-3xl font-bold">5k+</span>
-                        <span class="text-sm uppercase tracking-widest text-green-200">Meals Shared</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-3xl font-bold">1k+</span>
-                        <span class="text-sm uppercase tracking-widest text-green-200">Volunteers</span>
-                    </div>
+            <div class="relative z-10 flex flex-col justify-center px-16 text-white min-h-[600px]">
+                <div class="border-l-2 border-green-400/30 pl-6 mb-12">
+                    <x-application-logo class="w-16 h-16 fill-current text-white" />
                 </div>
+
+                <h1 class="text-6xl font-serif font-medium leading-[1.1] tracking-tight max-w-2xl">
+                    Ensuring No Plate <br>
+                    <span class="italic font-serif opacity-90">Remains Vacant.</span>
+                </h1>
+
+                <div class="w-24 h-px bg-green-400/40 mt-10 mb-8"></div>
+
+                <p class="text-xl text-green-50/80 font-light leading-relaxed max-w-lg font-sans tracking-wide">
+                    Join a distinguished network of donors and volunteers within the FoodShare community, dedicated to
+                    the systemic reduction of waste and the global fight against hunger.
+                </p>
             </div>
             <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-green-500 rounded-full opacity-20"></div>
         </div>

@@ -23,7 +23,7 @@
                     <thead class="bg-gray-50 text-gray-400 uppercase text-[10px] tracking-widest">
                         <tr>
                             <th class="p-4 font-bold">Member & Contact</th>
-                            <th class="p-4 font-bold">Items Needed</th>
+                            <th class="p-4 font-bold">Items & Quantities</th>
                             <th class="p-4 font-bold">Address</th>
                             <th class="p-4 font-bold">Reason</th>
                             <th class="p-4 font-bold">Urgency</th>
@@ -38,8 +38,16 @@
                                     <div class="text-sm font-bold text-gray-900">{{ $request->user->name }}</div>
                                     <div class="text-xs text-gray-500">{{ $request->user->email }}</div>
                                 </td>
-                                <td class="p-4 text-xs font-medium text-gray-700">
-                                    {{ $request->items_needed }}
+                                <td class="p-4">
+                                    <div class="text-xs font-bold text-gray-800">{{ $request->items_needed }}</div>
+                                    @if ($request->quantities)
+                                        <div
+                                            class="text-[10px] text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full inline-block mt-1">
+                                            Qty: {{ $request->quantities }}
+                                        </div>
+                                    @else
+                                        <div class="text-[10px] text-gray-400 italic mt-1">No quantity specified</div>
+                                    @endif
                                 </td>
                                 <td class="p-4">
                                     <div class="flex items-start">

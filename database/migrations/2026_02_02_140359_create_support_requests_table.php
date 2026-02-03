@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('reason');
             $table->text('items_needed');
+            $table->text('quantities');
             $table->string('address');
             $table->enum('urgency', ['low', 'medium', 'high'])->default('medium');
             $table->string('status')->default('pending');

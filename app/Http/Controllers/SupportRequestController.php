@@ -29,6 +29,7 @@ class SupportRequestController extends Controller
         $request->validate([
             'reason' => 'required|string|max:500',
             'items_needed' => 'required|string|max:255',
+            'quantities' => 'nullable|string|max:255',
             'address' => 'required',
             'urgency' => 'required|in:low,medium,high',
         ]);
@@ -39,6 +40,7 @@ class SupportRequestController extends Controller
         $user->supportRequests()->create([
             'reason' => $request->reason,
             'items_needed' => $request->items_needed,
+            'quantities' => $request->quantities,
             'address' => $request->address,
             'urgency' => $request->urgency,
             'status' => 'pending',

@@ -6,59 +6,24 @@
                     <h2 class="text-2xl font-bold text-white">Submit Support Request</h2>
                     <p class="text-indigo-100 text-sm">Please tell us what you need and how we can help.</p>
                 </div>
-
-                {{-- <form action="{{ route('member.requests.store') }}" method="POST" class="p-8 space-y-6">
-                    @csrf
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Items Needed</label>
-                        <input type="text" name="items_needed" placeholder="e.g. Rice, Milk, Canned vegetables"
-                            required
-                            class="w-full rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Delivery Address</label>
-                        <div class="relative">
-                            <input type="text" name="address" placeholder="Enter your full street address" required
-                                class="w-full pl-10 rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Urgency Level</label>
-                        <select name="urgency" required
-                            class="w-full rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm">
-                            <option value="low">Low (Next 7 days)</option>
-                            <option value="medium">Medium (Next 2-3 days)</option>
-                            <option value="high">High (Immediate Assistance)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Reason for Request</label>
-                        <textarea name="reason" rows="4" placeholder="Briefly explain your situation..." required
-                            class="w-full rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"></textarea>
-                    </div>
-
-                    <div class="flex items-center justify-end space-x-4 pt-4">
-                        <a href="{{ route('dashboard') }}"
-                            class="text-sm font-bold text-gray-400 hover:text-gray-600">Cancel</a>
-                        <button type="submit"
-                            class="px-8 py-3 bg-indigo-600 text-white rounded-full font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">
-                            Submit Request
-                        </button>
-                    </div>
-                </form> --}}
                 <form action="{{ route('member.requests.store') }}" method="POST" class="p-8 space-y-6">
                     @csrf
-
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Items Needed</label>
                         <input type="text" name="items_needed" placeholder="e.g. Rice, Milk, Canned vegetables"
                             required value="{{ old('items_needed') }}"
                             class="w-full rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm @error('items_needed') border-red-500 @enderror">
                         @error('items_needed')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Quantity</label>
+                        <input type="text" name="quantities" placeholder="e.g. 2kg, 3 units"
+                            value="{{ old('quantities') }}"
+                            class="w-full rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm @error('quantities') border-red-500 @enderror">
+                        @error('quantities')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>

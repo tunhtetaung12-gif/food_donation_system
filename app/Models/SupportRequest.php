@@ -10,8 +10,9 @@ class SupportRequest extends Model
     protected $fillable = [
         'user_id',
         'items_needed',
+        'quantities',
         'reason',
-        'address', 
+        'address',
         'urgency',
         'status',
     ];

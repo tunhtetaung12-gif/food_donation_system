@@ -5,8 +5,7 @@
             x-transition:enter-start="opacity-0 transform translate-y-[-20px]"
             x-transition:enter-end="opacity-100 transform translate-y-0"
             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0" class="fixed top-6 right-6 z-[100] max-w-sm w-full">
-
+            x-transition:leave-end="opacity-0" class="fixed top-6 right-6 z-[100] max-w-sm w-full px-4">
             <div
                 class="bg-white/90 backdrop-blur-md border border-green-100 shadow-2xl rounded-2xl p-4 flex items-center space-x-4">
                 <div class="bg-green-500 p-2 rounded-full flex-shrink-0">
@@ -26,129 +25,129 @@
             </div>
         </div>
     @endif
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('User Dashboard') }}
+        <h2 class="font-bold text-2xl text-gray-800 leading-tight">
+            {{ __('Donor Dashboard') }}
         </h2>
     </x-slot>
 
-    <div class="py-12 bg-gray-50">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-12 bg-gray-50/50 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div class="relative overflow-hidden bg-green-600 rounded-3xl shadow-lg p-8 mb-8 text-white">
-                <div class="relative z-10 flex items-center space-x-6">
+            <div
+                class="relative overflow-hidden bg-gradient-to-br from-green-600 to-green-700 rounded-[2rem] shadow-xl p-8 mb-10 text-white">
+                <div class="relative z-10 flex flex-col md:flex-row items-center md:space-x-8">
                     @if (Auth::user()->profile_photo)
                         <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}"
-                            class="h-20 w-20 rounded-full border-4 border-green-400 shadow-sm">
+                            class="h-28 w-28 rounded-3xl border-4 border-white/20 shadow-lg object-cover">
                     @else
                         <div
-                            class="h-20 w-20 bg-white text-green-600 rounded-full flex items-center justify-center text-3xl font-bold shadow-sm">
+                            class="h-28 w-28 bg-white text-green-600 rounded-3xl flex items-center justify-center text-4xl font-black shadow-lg">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
                     @endif
 
-                    <div>
-                        <h3 class="text-3xl font-bold italic">Welcome {{ Auth::user()->name }}!</h3>
-                        <p class="mt-2 opacity-90 text-lg">
-                            Status: <span class="capitalize font-semibold underline decoration-yellow-400">
+                    <div class="mt-6 md:mt-0 text-center md:text-left">
+                        <h3 class="text-4xl font-extrabold tracking-tight">Welcome, {{ Auth::user()->name }}!</h3>
+                        <p class="mt-2 text-green-100 text-lg font-medium">
+                            Account Type: <span
+                                class="px-3 py-1 bg-white/20 rounded-full text-sm uppercase tracking-wider ml-2">
                                 {{ Auth::user()->getRoleNames()->first() ?? 'Member' }}
                             </span>
                         </p>
                     </div>
                 </div>
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-green-500 rounded-full opacity-50"></div>
-                <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-yellow-400 rounded-full opacity-20">
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-yellow-400/20 rounded-full blur-2xl">
                 </div>
             </div>
 
             @role('admin')
                 <div
-                    class="mb-8 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-r-xl flex items-center justify-between">
+                    class="mb-8 p-5 bg-white border border-red-100 rounded-2xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
                     <div class="flex items-center">
-                        <span class="text-2xl mr-3">🛡️</span>
-                        <p class="font-bold text-sm">Administrator Access Active. You have full system control.</p>
+                        <div class="bg-red-100 p-3 rounded-xl mr-4 text-2xl">🛡️</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Administrator Access Active</p>
+                            <p class="text-sm text-gray-500">You have full system control and management permissions.</p>
+                        </div>
                     </div>
                     <a href="{{ route('admin.dashboard') }}"
-                        class="px-4 py-1 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-700 transition">Go
-                        to Admin Panel</a>
+                        class="w-full md:w-auto px-6 py-2.5 bg-red-600 text-white text-sm font-bold rounded-xl hover:bg-red-700 transition shadow-lg shadow-red-200 text-center">
+                        Admin Panel
+                    </a>
                 </div>
             @endrole
 
             @role('volunteer')
-                <div class="mb-10 bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
-                    <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
-                        <div class="flex items-center space-x-3">
-                            <div class="bg-blue-100 p-2 rounded-lg">
-                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="mb-10 bg-white shadow-sm border border-gray-100 rounded-[2rem] overflow-hidden">
+                    <div class="px-8 py-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-100">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
-                                    </path>
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-base font-bold text-gray-900 tracking-tight">Your Assigned Pickups</h3>
-                                <p class="text-xs text-gray-500">Coordinate with donors to collect surplus food</p>
+                                <h3 class="text-xl font-bold text-gray-900">Your Assigned Pickups</h3>
+                                <p class="text-sm text-gray-500 font-medium">Coordinate and track active collections</p>
                             </div>
                         </div>
                     </div>
 
-
-
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                        <table class="w-full text-left">
                             <thead>
-                                <tr class="bg-gray-50/50 border-b border-gray-100">
-                                    <th class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Food
-                                        Item & Donor</th>
-                                    <th class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
-                                        Pickup Details</th>
+                                <tr class="bg-gray-50/50">
+                                    <th class="px-8 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Food &
+                                        Donor</th>
+                                    <th class="px-8 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                        Logistics</th>
                                     <th
-                                        class="px-6 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest text-right">
-                                        Coordination</th>
+                                        class="px-8 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest text-right">
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
                                 @forelse($assignedDonations as $donation)
-                                    <tr class="hover:bg-gray-50/80 transition-colors">
-                                        <td class="px-6 py-4">
+                                    <tr class="hover:bg-blue-50/30 transition-colors">
+                                        <td class="px-8 py-6">
                                             <div class="flex flex-col">
                                                 <span
-                                                    class="text-sm font-bold text-gray-900">{{ $donation->food_name }}</span>
+                                                    class="text-lg font-bold text-gray-900">{{ $donation->food_name }}</span>
                                                 <span
-                                                    class="text-xs text-green-600 font-semibold">{{ $donation->quantity }}</span>
-                                                <span class="text-[10px] text-gray-400">Donor:
+                                                    class="inline-flex items-center text-sm font-bold text-green-600 mt-1">
+                                                    📦 {{ $donation->quantity }}
+                                                </span>
+                                                <span class="text-xs text-gray-400 mt-1 font-medium italic">Donor:
                                                     {{ $donation->user->name ?? 'Guest Donor' }}</span>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex flex-col text-xs text-gray-600">
-                                                <div class="flex items-center mb-1">
-                                                    <span class="font-bold mr-1">📍 Pickup:</span>
-                                                    {{ $donation->pickup_location }}
+                                        <td class="px-8 py-6">
+                                            <div class="space-y-2 text-sm">
+                                                <div class="flex items-center text-gray-600">
+                                                    <span class="w-5 text-lg">📍</span> <span
+                                                        class="font-medium ml-1">{{ $donation->pickup_location }}</span>
                                                 </div>
-                                                <div class="flex items-center mb-1">
-                                                    <span class="font-bold mr-1">📍 Drop-off:</span> {{ $donation->place }}
+                                                <div class="flex items-center text-gray-500">
+                                                    <span class="w-5 text-lg">🏁</span> <span
+                                                        class="ml-1">{{ $donation->place }}</span>
                                                 </div>
-                                                <div class="flex items-center">
-                                                    <span class="font-bold mr-1">🕒 Expiry:</span>
-                                                    <span
-                                                        class="{{ $donation->expiry_date && $donation->expiry_date->isPast() ? 'text-red-500 font-bold' : '' }}">
-                                                        {{ $donation->expiry_date ? $donation->expiry_date->format('M d, h:i A') : 'N/A' }}
-                                                    </span>
+                                                <div
+                                                    class="flex items-center {{ $donation->expiry_date && $donation->expiry_date->isPast() ? 'text-red-600' : 'text-orange-600' }}">
+                                                    <span class="w-5 text-lg">🕒</span>
+                                                    <span class="font-bold ml-1">Expires:
+                                                        {{ $donation->expiry_date ? $donation->expiry_date->format('M d, h:i A') : 'N/A' }}</span>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 text-right">
-                                            <div class="flex flex-col items-end space-y-2">
+                                        <td class="px-8 py-6 text-right">
+                                            <div class="flex flex-col items-end space-y-3">
                                                 <button type="button"
                                                     onclick="openDonorModal({{ json_encode($donation->user) }})"
-                                                    class="inline-flex items-center px-4 py-2 border border-blue-200 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-lg hover:bg-blue-100 transition-all uppercase w-max">
-                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                    </svg>
+                                                    class="inline-flex items-center px-5 py-2.5 bg-blue-50 text-blue-700 text-xs font-black rounded-xl hover:bg-blue-100 transition-all uppercase tracking-tighter w-max border border-blue-100">
                                                     Contact Donor
                                                 </button>
 
@@ -157,12 +156,7 @@
                                                     @csrf
                                                     <button type="button"
                                                         onclick="confirmPickup('{{ $donation->id }}', '{{ $donation->food_name }}')"
-                                                        class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-[10px] font-bold uppercase transition-all shadow-sm active:scale-95">
-                                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2" d="M5 13l4 4L19 7" />
-                                                        </svg>
+                                                        class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-tighter transition-all shadow-lg shadow-green-100 active:scale-95">
                                                         Mark Picked Up
                                                     </button>
                                                 </form>
@@ -171,9 +165,10 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="px-6 py-12 text-center">
-                                            <p class="text-sm font-medium text-gray-400 italic">No assignments found. Check
-                                                back later!</p>
+                                        <td colspan="3" class="px-8 py-20 text-center">
+                                            <div class="text-4xl mb-4">✨</div>
+                                            <p class="text-gray-400 font-medium italic">No active assignments. You're all
+                                                caught up!</p>
                                         </td>
                                     </tr>
                                 @endforelse
@@ -183,173 +178,172 @@
                 </div>
             @endrole
 
-
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-
                 @hasanyrole('donor')
                     <div
-                        class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-green-500 hover:shadow-md transition flex flex-col items-center text-center">
-                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl mb-4">🍎
-                        </div>
-                        <h4 class="text-lg font-bold text-gray-800">My Donations</h4>
-                        <p class="text-gray-500 text-sm mb-4">
-                            You have shared **{{ Auth::user()->donations->count() }}** items so far.
+                        class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all group">
+                        <div
+                            class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition">
+                            🍎</div>
+                        <h4 class="text-xl font-black text-gray-900 mb-2">My Donations</h4>
+                        <p class="text-gray-500 font-medium mb-6">
+                            You have contributed <span
+                                class="text-green-600 font-bold">{{ Auth::user()->donations->count() }} items</span> to
+                            the community.
                         </p>
                         <a href="{{ route('donations.index') }}"
-                            class="mt-auto text-green-600 font-bold hover:underline">
-                            View History & Edit →
+                            class="text-green-600 font-bold flex items-center hover:underline italic">
+                            History & Stats <span class="ml-2 group-hover:translate-x-2 transition">→</span>
                         </a>
                     </div>
+
                     <div
-                        class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-orange-500 hover:shadow-md transition flex flex-col items-center text-center">
-                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-3xl mb-4">➕
+                        class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+                            <svg class="w-24 h-24 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                            </svg>
                         </div>
-                        <h4 class="text-lg font-bold text-gray-800">Donate Food</h4>
-                        <p class="text-gray-500 text-sm mb-4">Help reduce waste today.</p>
-
+                        <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center text-3xl mb-6">➕
+                        </div>
+                        <h4 class="text-xl font-black text-gray-900 mb-2">Donate Food</h4>
+                        <p class="text-gray-500 font-medium mb-8">Got surplus? Share it now and reduce local food waste.
+                        </p>
                         <a href="{{ route('donations.create') }}"
-                            class="mt-auto px-6 py-2 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition shadow-md shadow-orange-200">
-                            Donate Food Now
+                            class="block w-full text-center py-4 bg-orange-500 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-orange-600 transition shadow-lg shadow-orange-100">
+                            Create Donation
                         </a>
-                    </div>
-                    <div class="mt-10 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div
-                            class="px-6 py-5 border-b border-gray-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gray-50/50">
-                            <div>
-                                <h3 class="text-lg font-bold text-gray-800 tracking-tight">Community Needs</h3>
-                                <p class="text-xs text-gray-500">Verified and approved requests seeking support</p>
-                            </div>
-                            <span
-                                class="px-3 py-1 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full uppercase tracking-wider whitespace-nowrap">
-                                {{ $availableRequests->count() }} Open Requests
-                            </span>
-                        </div>
-
-                        <div class="w-full">
-                            @forelse($availableRequests as $request)
-                                <div
-                                    class="block md:hidden p-5 border-b border-gray-50 last:border-0 hover:bg-gray-50/30 transition">
-                                    <div class="flex justify-between items-start mb-3">
-                                        <span
-                                            class="px-2 py-1 text-[9px] font-black rounded uppercase tracking-tighter
-                        {{ $request->urgency == 'high' ? 'bg-red-100 text-red-700' : ($request->urgency == 'medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700') }}">
-                                            {{ $request->urgency }}
-                                        </span>
-                                        <div class="text-[10px] text-gray-400 font-mono tracking-tighter">ID:
-                                            #{{ $request->id }}</div>
-                                    </div>
-
-                                    <h4 class="text-sm font-bold text-gray-900 mb-1">{{ $request->items_needed }}</h4>
-                                    <p class="text-xs text-gray-500 italic mb-4 line-clamp-2">"{{ $request->reason }}"</p>
-
-                                    <div class="flex items-center text-xs text-gray-600 mb-5">
-                                        <span class="mr-2 opacity-70">📍</span> {{ $request->address }}
-                                    </div>
-
-                                    <a href="{{ route('donations.create', ['request_id' => $request->id]) }}"
-                                        class="block w-full text-center px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all uppercase shadow-md active:scale-95">
-                                        Help This Member
-                                    </a>
-                                </div>
-
-                                <div
-                                    class="hidden md:grid md:grid-cols-12 gap-4 px-6 py-5 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition items-center">
-                                    <div class="col-span-5">
-                                        <div class="text-sm font-bold text-gray-900">{{ $request->items_needed }}</div>
-                                        <div class="text-[11px] text-gray-500 italic truncate"
-                                            title="{{ $request->reason }}">
-                                            "{{ Str::limit($request->reason, 80) }}"
-                                        </div>
-                                    </div>
-                                    <div class="col-span-3 text-xs text-gray-600">
-                                        <div class="flex items-center">
-                                            <span class="mr-1.5 opacity-60">📍</span>
-                                            {{ Str::limit($request->address, 30) }}
-                                        </div>
-                                    </div>
-                                    <div class="col-span-2">
-                                        <span
-                                            class="inline-block px-2 py-1 text-[9px] font-black rounded uppercase tracking-tighter
-                        {{ $request->urgency == 'high' ? 'bg-red-100 text-red-700' : ($request->urgency == 'medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700') }}">
-                                            {{ $request->urgency }}
-                                        </span>
-                                    </div>
-                                    <div class="col-span-2 text-right">
-                                        <a href="{{ route('donations.create', ['request_id' => $request->id]) }}"
-                                            class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold rounded-lg transition-all uppercase shadow-sm active:scale-95">
-                                            Help Member
-                                        </a>
-                                    </div>
-                                </div>
-                            @empty
-                                <div class="px-6 py-16 text-center">
-                                    <div
-                                        class="inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-full mb-4">
-                                        <span class="text-xl">✨</span>
-                                    </div>
-                                    <p class="text-sm text-gray-400 italic">No community requests currently available.</p>
-                                    <p class="text-[11px] text-gray-400 mt-1">Thank you for your willingness to support!
-                                    </p>
-                                </div>
-                            @endforelse
-                        </div>
                     </div>
                 @endhasanyrole
 
                 @role('member')
                     <div
-                        class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-indigo-500 hover:shadow-md transition flex flex-col items-center text-center">
-                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-3xl mb-4">🤝
+                        class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all group">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center text-3xl mb-6">🤝
                         </div>
-                        <h4 class="text-lg font-bold text-gray-800">Request Support</h4>
-                        <p class="text-gray-500 text-sm mb-4">Need food assistance? Submit a request to our admin team.</p>
-                        <div class="mt-auto flex flex-col space-y-2 w-full">
-                            <a href="{{ route('member.requests.create') }}"
-                                class="px-6 py-2 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition shadow-md shadow-indigo-200">
-                                New Request
-                            </a>
-                        </div>
+                        <h4 class="text-xl font-black text-gray-900 mb-2">Request Support</h4>
+                        <p class="text-gray-500 font-medium mb-8">In need of assistance? We are here to help you get food.
+                        </p>
+                        <a href="{{ route('member.requests.create') }}"
+                            class="block w-full text-center py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-indigo-700 transition shadow-lg shadow-indigo-100">
+                            New Request
+                        </a>
                     </div>
                 @endrole
 
                 <div
-                    class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-blue-500 hover:shadow-md transition flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-3xl mb-4">⚙️
+                    class="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all group">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-6">⚙️
                     </div>
-                    <h4 class="text-lg font-bold text-gray-800">Settings</h4>
-                    <p class="text-gray-500 text-sm mb-4">Update your profile and avatar.</p>
+                    <h4 class="text-xl font-black text-gray-900 mb-2">Account Settings</h4>
+                    <p class="text-gray-500 font-medium mb-6">Manage your contact info, location, and security details.
+                    </p>
                     <a href="{{ route('profile.edit') }}"
-                        class="mt-auto text-blue-600 font-bold hover:underline">Edit
-                        Profile →</a>
+                        class="text-blue-600 font-bold flex items-center hover:underline italic">
+                        Edit Profile <span class="ml-2 group-hover:translate-x-2 transition">→</span>
+                    </a>
                 </div>
             </div>
 
-            <h4 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                <span class="mr-2">🖼️</span> Community Impact Gallery
-            </h4>
+            @hasanyrole('donor')
+                <div class="mb-12">
+                    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+                        <div
+                            class="px-8 py-6 border-b border-gray-50 flex flex-col sm:flex-row justify-between items-center gap-4 bg-gray-50/30">
+                            <div>
+                                <h3 class="text-xl font-black text-gray-900 tracking-tight">Community Needs</h3>
+                                <p class="text-sm text-gray-500 font-medium italic">Verified requests from people who need
+                                    your help</p>
+                            </div>
+                            <span
+                                class="px-4 py-1.5 bg-indigo-100 text-indigo-700 text-xs font-black rounded-full uppercase tracking-wider">
+                                {{ $availableRequests->count() }} Open Requests
+                            </span>
+                        </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                <div class="group relative h-48 bg-gray-200 rounded-2xl overflow-hidden shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=400"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end p-3">
-                        <p class="text-white text-xs font-semibold">Local Food Bank Delivery</p>
+                        <div class="divide-y divide-gray-50">
+                            @forelse($availableRequests as $request)
+                                <div class="p-8 hover:bg-indigo-50/20 transition group">
+                                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                                        <div class="md:col-span-5">
+                                            <div class="flex items-center mb-2">
+                                                <span
+                                                    class="px-2.5 py-1 text-[10px] font-black rounded-md uppercase tracking-tighter mr-3
+                                                    {{ $request->urgency == 'high' ? 'bg-red-100 text-red-700' : ($request->urgency == 'medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700') }}">
+                                                    {{ $request->urgency }} Urgency
+                                                </span>
+                                                <span
+                                                    class="text-[10px] text-gray-400 font-mono">#{{ $request->id }}</span>
+                                            </div>
+                                            <h4
+                                                class="text-lg font-bold text-gray-900 mb-1 group-hover:text-indigo-600 transition">
+                                                {{ $request->items_needed }}</h4>
+                                            @if ($request->quantities)
+                                                <div class="flex items-center gap-1.5 mb-2">
+                                                    <span
+                                                        class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Needed:</span>
+                                                    <span
+                                                        class="px-2 py-0.5 bg-indigo-50 text-indigo-600 text-[11px] font-bold rounded-md border border-indigo-100">
+                                                        {{ $request->quantities }}
+                                                    </span>
+                                                </div>
+                                            @endif
+                                            <p class="text-sm text-gray-500 italic line-clamp-2">"{{ $request->reason }}"
+                                            </p>
+                                        </div>
+                                        <div class="md:col-span-4">
+                                            <div class="flex items-center text-sm text-gray-600 font-medium">
+                                                <span class="text-lg mr-2">📍</span> {{ $request->address }}
+                                            </div>
+                                        </div>
+                                        <div class="md:col-span-3 text-right">
+                                            <a href="{{ route('donations.create', ['request_id' => $request->id]) }}"
+                                                class="inline-flex items-center justify-center px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black rounded-xl transition-all uppercase tracking-widest shadow-lg shadow-indigo-100 active:scale-95">
+                                                Help Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="px-8 py-20 text-center">
+                                    <div class="text-4xl mb-4">🙌</div>
+                                    <p class="text-gray-400 font-medium italic">No active requests. The community is doing
+                                        great!</p>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            @endhasanyrole
+
+            <div class="mb-12">
+                <h4 class="text-2xl font-black text-gray-900 mb-6 flex items-center">
+                    <span class="mr-3">📸</span> Community Impact Gallery
+                </h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="group relative h-60 bg-gray-200 rounded-[2rem] overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=400"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6 translate-y-4 group-hover:translate-y-0 transition-transform">
+                            <p class="text-white text-sm font-bold">Local Food Bank Delivery</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-sm p-6">
-                <h4 class="font-bold text-gray-800 mb-4 flex items-center">
-                    <span class="mr-2 text-xl">🔔</span> Recent Notifications
+            <div class="bg-white rounded-[2rem] shadow-sm p-8 border border-gray-100">
+                <h4 class="font-black text-xl text-gray-900 mb-6 flex items-center">
+                    <span class="mr-3 text-2xl">🔔</span> Recent Activity
                 </h4>
-                <div class="space-y-3">
-                    <div class="flex items-start p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
-                        <span class="mr-3 text-xl">🎉</span>
+                <div class="space-y-4">
+                    <div class="flex items-start p-5 bg-green-50/50 rounded-2xl border-l-8 border-green-500">
+                        <span class="mr-4 text-2xl">🎉</span>
                         <div>
-                            <p class="text-sm font-bold text-green-900">Welcome to FoodShare!</p>
-                            <p class="text-xs text-green-700">Thank you for joining as a
-                                {{ Auth::user()->getRoleNames()->first() }}.</p>
+                            <p class="font-black text-green-900">Welcome to FoodShare!</p>
+                            <p class="text-sm text-green-700 font-medium">Thank you for joining as a
+                                {{ Auth::user()->getRoleNames()->first() }}. Let's make a difference.</p>
                         </div>
                     </div>
                 </div>
@@ -359,75 +353,76 @@
     </div>
 </x-app-layout>
 
-
 <div id="donorModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog"
     aria-modal="true">
-    <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onclick="closeDonorModal()"></div>
+    <div class="fixed inset-0 bg-gray-900/80 backdrop-blur-md transition-opacity" onclick="closeDonorModal()"></div>
 
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
         <div
-            class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-100">
-            <div class="h-24 bg-gradient-to-r from-blue-600 to-indigo-700">
+            class="relative transform overflow-hidden rounded-[2.5rem] bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-100">
+            <div class="h-32 bg-gradient-to-r from-blue-600 to-indigo-700 relative">
                 <button onclick="closeDonorModal()"
-                    class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" />
+                    class="absolute top-6 right-6 text-white/60 hover:text-white transition-colors bg-white/10 p-2 rounded-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 18L18 6M6 6l12 12" stroke-width="3" stroke-linecap="round" />
                     </svg>
                 </button>
             </div>
 
-            <div class="px-6 pb-8">
-                <div class="relative -mt-12 mb-4 flex justify-center">
+            <div class="px-8 pb-10">
+                <div class="relative -mt-16 mb-6 flex justify-center">
                     <img id="modal-photo" src=""
-                        class="w-24 h-24 rounded-2xl object-cover border-4 border-white shadow-xl bg-white">
+                        class="w-32 h-32 rounded-[2rem] object-cover border-8 border-white shadow-2xl bg-gray-100">
                 </div>
 
-                <div class="text-center mb-8">
-                    <h3 id="modal-name" class="text-2xl font-black text-gray-900 tracking-tight">Donor Name</h3>
-                    <p class="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em]">Verified FoodShare Donor
+                <div class="text-center mb-10">
+                    <h3 id="modal-name" class="text-3xl font-black text-gray-900 tracking-tight">Donor Name</h3>
+                    <p
+                        class="mt-1 inline-block px-4 py-1 bg-blue-50 text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] rounded-full">
+                        Verified Community Donor
                     </p>
                 </div>
 
-                <div class="space-y-3">
+                <div class="space-y-4">
                     <div
-                        class="group flex items-center p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-blue-100 hover:bg-blue-50/30 transition-all">
-                        <div class="bg-white p-2.5 rounded-xl shadow-sm mr-4 text-blue-600">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="group flex items-center p-5 bg-gray-50 rounded-3xl border border-transparent hover:border-blue-100 hover:bg-blue-50/50 transition-all">
+                        <div class="bg-white p-3 rounded-2xl shadow-sm mr-5 text-blue-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                     stroke-width="2" />
                             </svg>
                         </div>
-                        <div class="flex-1">
-                            <p class="text-[9px] uppercase font-black text-gray-400 tracking-widest">Email Address</p>
+                        <div class="flex-1 overflow-hidden">
+                            <p class="text-[10px] uppercase font-black text-gray-400 tracking-widest">Email Address</p>
                             <a id="modal-email" href=""
-                                class="text-sm font-bold text-gray-700 hover:text-blue-600 transition-colors"></a>
+                                class="text-base font-bold text-gray-800 hover:text-blue-600 transition-colors truncate block"></a>
                         </div>
                     </div>
 
                     <div
-                        class="group flex items-center p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-green-100 hover:bg-green-50/30 transition-all">
-                        <div class="bg-white p-2.5 rounded-xl shadow-sm mr-4 text-green-600">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="group flex items-center p-5 bg-gray-50 rounded-3xl border border-transparent hover:border-green-100 hover:bg-green-50/50 transition-all">
+                        <div class="bg-white p-3 rounded-2xl shadow-sm mr-5 text-green-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                                     stroke-width="2" />
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <p class="text-[9px] uppercase font-black text-gray-400 tracking-widest">Phone Number</p>
-                            <p id="modal-phone" class="text-sm font-bold text-gray-700"></p>
+                            <p class="text-[10px] uppercase font-black text-gray-400 tracking-widest">Phone Number</p>
+                            <p id="modal-phone" class="text-base font-bold text-gray-800"></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-8 grid grid-cols-2 gap-3">
+                <div class="mt-10 grid grid-cols-2 gap-4">
                     <a id="modal-call-btn" href=""
-                        class="flex items-center justify-center bg-gray-900 text-white py-3.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-black transition-all active:scale-95">
+                        class="flex items-center justify-center bg-gray-900 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all active:scale-95 shadow-xl shadow-gray-200">
                         Call Now
                     </a>
                     <a id="modal-email-btn" href=""
-                        class="flex items-center justify-center bg-blue-600 text-white py-3.5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all active:scale-95">
+                        class="flex items-center justify-center bg-blue-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all active:scale-95 shadow-xl shadow-blue-200">
                         Send Email
                     </a>
                 </div>
@@ -436,9 +431,9 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function openDonorModal(user) {
-
         document.getElementById('modal-name').innerText = user.name;
         document.getElementById('modal-email').innerText = user.email;
         document.getElementById('modal-email').href = "mailto:" + user.email;
@@ -446,12 +441,12 @@
 
         document.getElementById('modal-email-btn').href = "mailto:" + user.email;
         document.getElementById('modal-call-btn').href = user.phone ? "tel:" + user.phone : "#";
+
         if (!user.phone) {
             document.getElementById('modal-call-btn').classList.add('opacity-50', 'cursor-not-allowed');
         } else {
             document.getElementById('modal-call-btn').classList.remove('opacity-50', 'cursor-not-allowed');
         }
-
 
         const photoPath = user.profile_photo ?
             "/storage/" + user.profile_photo :
@@ -481,9 +476,9 @@
             confirmButtonText: 'Yes, Collected!',
             cancelButtonText: 'Not yet',
             customClass: {
-                popup: 'rounded-3xl',
-                confirmButton: 'rounded-xl px-6 py-3',
-                cancelButton: 'rounded-xl px-6 py-3'
+                popup: 'rounded-[2rem] p-8',
+                confirmButton: 'rounded-2xl px-8 py-3 font-bold uppercase tracking-widest text-xs',
+                cancelButton: 'rounded-2xl px-8 py-3 font-bold uppercase tracking-widest text-xs'
             }
         }).then((result) => {
             if (result.isConfirmed) {
@@ -492,5 +487,3 @@
         });
     }
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
