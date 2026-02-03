@@ -101,7 +101,7 @@
                                                 </svg>
                                                 Edit
                                             </a>
-                                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
+                                            {{-- <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
                                                 onsubmit="return confirm('Are you sure you want to remove this member?');"
                                                 class="inline">
                                                 @csrf
@@ -116,7 +116,63 @@
                                                     </svg>
                                                     Delete
                                                 </button>
-                                            </form>
+                                            </form> --}}
+                                            <div x-data="{ open: false }" class="inline">
+                                                <button type="button" @click="open = true"
+                                                    class="inline-flex items-center px-4 py-1.5 bg-rose-50 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-rose-600 hover:text-white transition-all duration-300 ease-in-out shadow-sm hover:shadow-md border border-rose-100">
+                                                    <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2.5"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                    Delete
+                                                </button>
+
+                                                <template x-teleport="body">
+                                                    <div x-show="open" x-transition.opacity
+                                                        class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 backdrop-blur-sm p-4">
+
+                                                        <div @click.away="open = false" x-show="open"
+                                                            x-transition.scale.95
+                                                            class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center border border-gray-100">
+
+                                                            <div
+                                                                class="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-rose-100 mb-4">
+                                                                <svg class="h-8 w-8 text-rose-600" fill="none"
+                                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 15.632c-.77 1.333.192 3 1.732 3z" />
+                                                                </svg>
+                                                            </div>
+
+                                                            <h3 class="text-lg font-bold text-gray-900">Confirm Removal
+                                                            </h3>
+                                                            <p class="text-sm text-gray-500 mt-2">Are you sure you want
+                                                                to remove this member? This action cannot be undone.</p>
+
+                                                            <div class="mt-6 flex gap-3">
+                                                                <button @click="open = false" type="button"
+                                                                    class="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors">
+                                                                    Cancel
+                                                                </button>
+
+                                                                <form
+                                                                    action="{{ route('admin.users.destroy', $user) }}"
+                                                                    method="POST" class="flex-1">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="w-full px-4 py-2 bg-rose-600 text-white rounded-xl font-semibold hover:bg-rose-700 shadow-lg shadow-rose-200 transition-all">
+                                                                        Yes, Delete
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

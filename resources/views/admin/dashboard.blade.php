@@ -25,6 +25,11 @@
                     <span class="text-lg">📦</span>
                     <span class="font-medium">Manage Donations</span>
                 </a>
+                <a href="{{ route('admin.support.index') }}"
+                    class="flex items-center space-x-3 p-3 rounded-lg transition {{ request()->routeIs('admin.support.index') ? 'bg-green-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    <span class="text-lg">🤝</span>
+                    <span class="font-medium">Member Requests</span>
+                </a>
             </nav>
 
             <div class="p-4 border-t border-slate-800">
@@ -58,6 +63,12 @@
             <div class="p-8 space-y-8">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-t-4 border-t-slate-900">
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Pending Requests</p>
+                        <div class="flex items-center justify-between mt-1">
+                            <p class="text-3xl font-bold text-gray-900">{{ $pendingRequestsCount }}</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-t-4 border-t-red-900">
                         <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Total Members</p>
                         <p class="text-3xl font-bold mt-1 text-gray-900">{{ $totalUsers }}</p>
                     </div>

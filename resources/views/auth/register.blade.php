@@ -77,8 +77,9 @@
                                 class="text-xs uppercase tracking-widest font-semibold text-gray-600" />
                             <select id="role" name="role"
                                 class="block mt-1 w-full border-gray-200 focus:ring-green-600 focus:border-green-600 rounded-md shadow-sm text-gray-700 py-2.5">
-                                <option value="donor">Donor (Food provider)</option>
-                                <option value="volunteer">Volunteer (Courier)</option>
+                                <option value="member">Member (Need Food)</option>
+                                <option value="donor">Donor (Give Food)</option>
+                                <option value="volunteer">Volunteer (Deliver Food)</option>
                             </select>
                             <x-input-error :messages="$errors->get('role')" class="mt-2" />
                         </div>

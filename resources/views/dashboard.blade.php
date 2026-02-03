@@ -183,6 +183,8 @@
                 </div>
             @endrole
 
+
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
 
                 @hasanyrole('donor')
@@ -199,7 +201,6 @@
                             View History & Edit →
                         </a>
                     </div>
-
                     <div
                         class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-orange-500 hover:shadow-md transition flex flex-col items-center text-center">
                         <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-3xl mb-4">➕
@@ -212,7 +213,105 @@
                             Donate Food Now
                         </a>
                     </div>
+                    <div class="mt-10 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div
+                            class="px-6 py-5 border-b border-gray-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gray-50/50">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 tracking-tight">Community Needs</h3>
+                                <p class="text-xs text-gray-500">Verified and approved requests seeking support</p>
+                            </div>
+                            <span
+                                class="px-3 py-1 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full uppercase tracking-wider whitespace-nowrap">
+                                {{ $availableRequests->count() }} Open Requests
+                            </span>
+                        </div>
+
+                        <div class="w-full">
+                            @forelse($availableRequests as $request)
+                                <div
+                                    class="block md:hidden p-5 border-b border-gray-50 last:border-0 hover:bg-gray-50/30 transition">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span
+                                            class="px-2 py-1 text-[9px] font-black rounded uppercase tracking-tighter
+                        {{ $request->urgency == 'high' ? 'bg-red-100 text-red-700' : ($request->urgency == 'medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700') }}">
+                                            {{ $request->urgency }}
+                                        </span>
+                                        <div class="text-[10px] text-gray-400 font-mono tracking-tighter">ID:
+                                            #{{ $request->id }}</div>
+                                    </div>
+
+                                    <h4 class="text-sm font-bold text-gray-900 mb-1">{{ $request->items_needed }}</h4>
+                                    <p class="text-xs text-gray-500 italic mb-4 line-clamp-2">"{{ $request->reason }}"</p>
+
+                                    <div class="flex items-center text-xs text-gray-600 mb-5">
+                                        <span class="mr-2 opacity-70">📍</span> {{ $request->address }}
+                                    </div>
+
+                                    <a href="{{ route('donations.create', ['request_id' => $request->id]) }}"
+                                        class="block w-full text-center px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all uppercase shadow-md active:scale-95">
+                                        Help This Member
+                                    </a>
+                                </div>
+
+                                <div
+                                    class="hidden md:grid md:grid-cols-12 gap-4 px-6 py-5 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition items-center">
+                                    <div class="col-span-5">
+                                        <div class="text-sm font-bold text-gray-900">{{ $request->items_needed }}</div>
+                                        <div class="text-[11px] text-gray-500 italic truncate"
+                                            title="{{ $request->reason }}">
+                                            "{{ Str::limit($request->reason, 80) }}"
+                                        </div>
+                                    </div>
+                                    <div class="col-span-3 text-xs text-gray-600">
+                                        <div class="flex items-center">
+                                            <span class="mr-1.5 opacity-60">📍</span>
+                                            {{ Str::limit($request->address, 30) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <span
+                                            class="inline-block px-2 py-1 text-[9px] font-black rounded uppercase tracking-tighter
+                        {{ $request->urgency == 'high' ? 'bg-red-100 text-red-700' : ($request->urgency == 'medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700') }}">
+                                            {{ $request->urgency }}
+                                        </span>
+                                    </div>
+                                    <div class="col-span-2 text-right">
+                                        <a href="{{ route('donations.create', ['request_id' => $request->id]) }}"
+                                            class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-bold rounded-lg transition-all uppercase shadow-sm active:scale-95">
+                                            Help Member
+                                        </a>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="px-6 py-16 text-center">
+                                    <div
+                                        class="inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-full mb-4">
+                                        <span class="text-xl">✨</span>
+                                    </div>
+                                    <p class="text-sm text-gray-400 italic">No community requests currently available.</p>
+                                    <p class="text-[11px] text-gray-400 mt-1">Thank you for your willingness to support!
+                                    </p>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
                 @endhasanyrole
+
+                @role('member')
+                    <div
+                        class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-indigo-500 hover:shadow-md transition flex flex-col items-center text-center">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-3xl mb-4">🤝
+                        </div>
+                        <h4 class="text-lg font-bold text-gray-800">Request Support</h4>
+                        <p class="text-gray-500 text-sm mb-4">Need food assistance? Submit a request to our admin team.</p>
+                        <div class="mt-auto flex flex-col space-y-2 w-full">
+                            <a href="{{ route('member.requests.create') }}"
+                                class="px-6 py-2 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition shadow-md shadow-indigo-200">
+                                New Request
+                            </a>
+                        </div>
+                    </div>
+                @endrole
 
                 <div
                     class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-blue-500 hover:shadow-md transition flex flex-col items-center text-center">
