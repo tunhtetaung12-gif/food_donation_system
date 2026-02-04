@@ -12,7 +12,7 @@
                         {{ __('Welcome Back') }}
                     </h2>
                     <p class="text-sm text-gray-500 mt-2 italic">
-                        {{ __('Sign in to your FoodShare account to continue.') }}
+                        {{ __('Sign in to your Share & Care account to continue.') }}
                     </p>
                 </div>
 

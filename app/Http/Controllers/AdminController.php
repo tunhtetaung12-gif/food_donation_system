@@ -43,7 +43,7 @@ class AdminController extends Controller
 
     public function manageUsers()
     {
-        $users = User::with('roles')->paginate(10);
+        $users = User::with('roles')->paginate(5);
         return view('admin.users.index', compact('users'));
     }
 

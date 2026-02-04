@@ -16,7 +16,7 @@
                 <div class="w-24 h-px bg-green-400/40 mt-10 mb-8"></div>
 
                 <p class="text-xl text-green-50/80 font-light leading-relaxed max-w-lg font-sans tracking-wide">
-                    Join a distinguished network of donors and volunteers within the FoodShare community, dedicated to
+                    Join a distinguished network of donors and volunteers within the Share & Care community, dedicated to
                     the systemic reduction of waste and the global fight against hunger.
                 </p>
             </div>
@@ -34,7 +34,7 @@
                         {{ __('Create an Account') }}
                     </h2>
                     <p class="text-sm text-gray-500 mt-2 italic">
-                        {{ __('Join the FoodShare community and start making an impact.') }}
+                        {{ __('Join the Share & Care community and start making an impact.') }}
                     </p>
                 </div>
 

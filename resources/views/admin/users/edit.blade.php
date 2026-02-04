@@ -4,7 +4,7 @@
             <div class="p-6">
                 <div class="flex items-center space-x-3">
                     <x-application-logo class="w-10 h-10 fill-current text-green-400" />
-                    <span class="text-xl font-serif font-bold tracking-wider">FoodShare</span>
+                    <span class="text-xl font-serif font-bold tracking-wider">Share & Care</span>
                 </div>
             </div>
             <nav class="flex-1 px-4 space-y-2">

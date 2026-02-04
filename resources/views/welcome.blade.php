@@ -4,13 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FoodShare - Community Donation Portal</title>
+    <title>Share & Care - Community Donation Portal</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="antialiased bg-gray-50 text-gray-800">
     <nav class="sticky top-0 z-50 p-6 flex justify-between items-center bg-white/80 backdrop-blur-md shadow-sm">
-        <h1 class="text-2xl font-bold text-green-600 tracking-tight">FoodShare</h1>
+        <h1 class="text-2xl font-bold text-green-600 tracking-tight">Share & Care</h1>
         <div class="space-x-4">
             @if (Route::has('login'))
                 @auth
@@ -111,14 +111,13 @@
 
             stats.forEach(stat => {
                 const target = +stat.getAttribute('data-target');
-                const duration = 2000; // Total time in milliseconds
-                const frameDuration = 1000 / 60; // 60fps
+                const duration = 2000;
+                const frameDuration = 1000 / 60;
                 const totalFrames = Math.round(duration / frameDuration);
                 let frame = 0;
 
                 const updateCount = () => {
                     frame++;
-                    // Simple ease-out function
                     const progress = frame / totalFrames;
                     const currentCount = Math.round(target * (1 - Math.pow(1 - progress, 3)));
 
@@ -154,7 +153,7 @@
 
                 <div class="lg:col-span-5 space-y-8">
                     <div class="space-y-4">
-                        <p class="text-green-600 font-bold uppercase tracking-[0.3em] text-xs">Since 2014</p>
+                        <p class="text-green-600 font-bold uppercase tracking-[0.3em] text-xs">Our Story</p>
                         <h2 class="text-5xl font-serif text-gray-900 leading-tight">
                             A Legacy of <br>
                             <span class="italic">Shared Abundance.</span>
@@ -179,7 +178,7 @@
 
                         <div class="space-y-6 text-gray-600 font-light leading-loose tracking-wide">
                             <p>
-                                FoodShare was established on a singular, unwavering principle: hunger is not a scarcity
+                                Share & Care was established on a singular, unwavering principle: hunger is not a scarcity
                                 of resources, but a failure of distribution. What began as a local initiative has
                                 evolved into a sophisticated network connecting surplus to necessity.
                             </p>
@@ -303,7 +302,7 @@
     </section>
 
     <footer class="bg-gray-900 text-gray-400 py-12 px-6 text-center">
-        <p class="mb-4">© 2026 FoodShare System.</p>
+        <p class="mb-4">© 2026 Share & Care System.</p>
         <div class="flex justify-center gap-6">
             <a href="#" class="hover:text-white transition">Privacy Policy</a>
             <a href="#" class="hover:text-white transition">Contact Us</a>

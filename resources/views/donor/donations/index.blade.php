@@ -34,8 +34,6 @@
                                     <div
                                         class="text-sm font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
                                         {{ $donation->food_name }}</div>
-                                    {{-- <div class="text-[10px] text-slate-400 mt-1 uppercase font-medium">Ref:
-                                        #DN-{{ str_pad($donation->id, 4, '0', STR_PAD_LEFT) }}</div> --}}
                                 </td>
 
                                 <td class="p-5">
