@@ -61,5 +61,8 @@ class User extends Authenticatable
     public function assignedVolunteer()
     {
         return $this->belongsTo(User::class, 'assigned_to');
+
+
+        
     }
 }
