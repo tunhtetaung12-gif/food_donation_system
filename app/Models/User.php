@@ -54,6 +54,9 @@ class User extends Authenticatable
 
     public function supportRequests(): HasMany
     {
+
+
+    
         return $this->hasMany(SupportRequest::class);
     }
 
@@ -63,6 +66,6 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'assigned_to');
 
 
-        
+
     }
 }
